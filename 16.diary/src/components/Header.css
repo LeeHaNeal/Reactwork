@@ -1,0 +1,15 @@
+.Header{
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid lightgray;
+
+}
+.header_center{
+    width: 50%;
+    justify-content: center;
+
+}
+.header_left ,.header_right{
+    width: 25%;
+}
