@@ -1,52 +1,61 @@
 import './App.css';
-import { Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import New from './pages/New';
 import Detail from './pages/Detail';
 import Edit from './pages/Edit';
 import { useReducer, useRef, createContext } from 'react';
 
-// ✅ 1. Context는 컴포넌트 밖에서 export해줘야 다른 파일에서 import 가능
-export const DiaryStateContext = createContext();
-export const DiaryDispatchContext = createContext();
-
-// ✅ 2. Mock 데이터
 const mockData = [
   {
-    id: 1,
-    createDate: new Date().getTime(),
-    emotionId: 1,
-    content: "1번 일기 내용"
+    id : 1,
+    createDate : new Date("2025-04-15").getTime(),
+    emotionId : 1,
+    content : "오늘은 기쁜날"
   },
   {
-    id: 2,
-    createDate: new Date().getTime(),
-    emotionId: 2,
-    content: "2번 일기 내용"
-  }
-];
+    id : 2,
+    createDate : new Date("2025-04-03").getTime(),
+    emotionId : 2,
+    content : "오늘은 슬픈날"
+  },
+  {
+    id : 3,
+    createDate : new Date("2025-03-25").getTime(),
+    emotionId : 3,
+    content : "오늘은 화가난다"
+  },
+  {
+    id : 4,
+    createDate : new Date("2025-02-17").getTime(),
+    emotionId : 4,
+    content : "두렵다.. 지하철통학이"
+  },
+]
 
-// ✅ 3. reducer 함수
 function reducer(state, action) {
-  switch (action.type) {
+  switch(action.type) {
     case "CREATE":
       return [action.data, ...state];
     case "UPDATE":
-      return state.map((item) =>
-        String(item.id) === String(action.data.id) ? action.data : item
+      return state.map((item) => 
+        item.id === action.data.id ? action.data : item
       );
     case "DELETE":
-      return state.filter((item) => String(item.id) !== String(action.id));
+      return state.filter((item) => item.id !== action.id);
     default:
-      return state;
+      return state; 
   }
 }
 
+export const DiaryStateContext = createContext();  
+export const DiaryDispatchContext = createContext();   
+
 function App() {
   const [data, dispatch] = useReducer(reducer, mockData);
-  const idRef = useRef(3);
+  const idRef = useRef(5);
 
-  // ✅ 일기 추가
+
   const onCreate = (createDate, emotionId, content) => {
     dispatch({
       type: "CREATE",
@@ -59,7 +68,7 @@ function App() {
     });
   };
 
-  // ✅ 일기 수정
+ 
   const onUpdate = (id, createDate, emotionId, content) => {
     dispatch({
       type: "UPDATE",
@@ -72,8 +81,8 @@ function App() {
     });
   };
 
-  // ✅ 일기 삭제
-  const onDelete = (id) => {
+ 
+  const onDelete = id => {
     dispatch({
       type: "DELETE",
       id
@@ -81,39 +90,19 @@ function App() {
   };
 
   return (
-    <DiaryStateContext.Provider value={data}>
-      <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
-        <div className="App">
-          {/* 테스트용 버튼 (개발 끝나면 삭제해도 OK) */}
-          <button onClick={() => {
-            onCreate(new Date().getTime(), 3, "Hello");
-          }}>일기 추가</button>
-
-          <button onClick={() => {
-            onUpdate(1, new Date().getTime(), 3, "수정된 일기입니다");
-          }}>일기 수정</button>
-
-          <button onClick={() => {
-            onDelete(1);
-          }}>일기 삭제</button>
-
-          <div>
-            <Link to="/">Home</Link>
-            <Link to="/new">New</Link>
-            <Link to="/detail">Detail</Link>
-            <Link to="/edit">Edit</Link>
-          </div>
-
+    <div className="App">
+      <DiaryStateContext.Provider value={data}>
+        <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/new" element={<New />} />
-            <Route path="/detail" element={<Detail />} />
+            <Route path="/detail/:id" element={<Detail />} />
             <Route path="/edit" element={<Edit />} />
-            <Route path="/*" element={<div>잘못된 페이지입니다</div>} />
+            <Route path="/*" element={<div>잘못된 페이지 입니다</div>} />
           </Routes>
-        </div>
-      </DiaryDispatchContext.Provider>
-    </DiaryStateContext.Provider>
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
+    </div>
   );
 }
 
