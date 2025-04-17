@@ -1,3 +1,4 @@
+// src/App.js
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -11,6 +12,7 @@ import Calendar from './page/calendar';
 import MyInfo from './page/myinfo';
 import Login from './page/login';
 
+import SignUp from './page/SignUp'; // SignUp 컴포넌트 import
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
@@ -19,12 +21,14 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-         <Route path="/calories" element={<Calories />} />
+      
+        <Route path="/calories" element={<Calories />} />
         <Route path="/challenge" element={<Challenge />} />
         <Route path="/exercise" element={<Exercise />} />
         <Route path="/community" element={<Community />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/signup" element={<SignUp />} /> {/* 회원가입 페이지 추가 */}
         <Route
           path="/myinfo"
           element={isLoggedIn ? <MyInfo /> : <Navigate to="/login" replace />}
