@@ -1,0 +1,136 @@
+.exercise-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #111827;
+  background-color: #f3f4f6;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #e0f2fe;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-icon {
+  font-size: 18px;
+  color: #3b82f6;
+}
+
+.exercise-group {
+  margin-bottom: 24px;
+}
+
+.type-header {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1e3a8a;
+  background-color: #dbeafe;
+  padding: 8px 12px;
+  border-left: 6px solid #3b82f6;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.exercise-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #bfdbfe;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.exercise-item span {
+  flex: 1;
+  text-align: center;
+}
+
+.plus-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  text-align: center;
+  line-height: 26px;
+  font-size: 16px;
+}
+
+.toggle-btn {
+  display: block;
+  margin: 6px auto 0;
+  padding: 6px 12px;
+  font-size: 13px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.toggle-btn:hover {
+  background-color: #2563eb;
+}
+
+.today-box {
+  background-color: #1e3a8a;
+  padding: 16px;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.today-item {
+  background-color: #e0f2fe;
+  color: #111827;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-top: 8px;
+  box-shadow: inset 0 0 0 1px #bae6fd;
+}
+
+input[type="number"] {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 13px;
+}
+
+.remove-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+}

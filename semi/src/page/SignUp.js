@@ -1,82 +1,51 @@
-// src/page/SignUp.js
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
 
-function SignUp() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate(); 
+const SignUp = () => {
+  const [form, setForm] = useState({
+    userId: "",
+    passwordHash: "",
+    name: "",
+    gender: "M",
+    birthDate: "",
+    height: "",
+    weight: "",
+    goalWeight: "",
+  });
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
-      setError('비밀번호가 일치하지 않습니다.');
-      return;
+    try {
+      const response = await axios.post("http://localhost:8080/users", form);
+      console.log("등록 성공:", response.data);
+      alert("회원 등록 성공!");
+    } catch (error) {
+      console.error("등록 실패:", error);
+      alert("회원 등록 실패 ㅠㅠ");
     }
-
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailPattern.test(email)) {
-      setError('유효한 이메일 주소를 입력해주세요.');
-      return;
-    }
-
-    
-    console.log('회원가입 정보:', { username, email, password });
-    alert('회원가입이 완료되었습니다!');
-
-    
-    navigate('/login');
   };
 
   return (
-    <div>
-      <h2>회원가입</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>사용자 이름</label>
-          <input 
-            type="text" 
-            value={username} 
-            onChange={(e) => setUsername(e.target.value)} 
-            required 
-          />
-        </div>
-        <div>
-          <label>이메일</label>
-          <input 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
-          />
-        </div>
-        <div>
-          <label>비밀번호</label>
-          <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
-          />
-        </div>
-        <div>
-          <label>비밀번호 확인</label>
-          <input 
-            type="password" 
-            value={confirmPassword} 
-            onChange={(e) => setConfirmPassword(e.target.value)} 
-            required 
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">회원가입</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input name="userId" placeholder="ID" onChange={handleChange} required />
+      <input name="passwordHash" placeholder="비밀번호" onChange={handleChange} required />
+      <input name="name" placeholder="이름" onChange={handleChange} required />
+      <select name="gender" onChange={handleChange}>
+        <option value="M">남자</option>
+        <option value="F">여자</option>
+      </select>
+      <input name="birthDate" type="date" onChange={handleChange} />
+      <input name="height" type="number" placeholder="키(cm)" onChange={handleChange} />
+      <input name="weight" type="number" placeholder="현재 몸무게(kg)" onChange={handleChange} />
+      <input name="goalWeight" type="number" placeholder="목표 몸무게(kg)" onChange={handleChange} />
+      <button type="submit">회원가입</button>
+    </form>
   );
-}
+};
 
 export default SignUp;
