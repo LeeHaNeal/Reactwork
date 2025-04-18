@@ -1,6 +1,6 @@
 // src/App.js
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Navbar from './components/Navbar';
 
@@ -11,24 +11,43 @@ import Community from './page/community';
 import Calendar from './page/calendar';
 import MyInfo from './page/myinfo';
 import Login from './page/login';
-
-import SignUp from './page/SignUp'; // SignUp 컴포넌트 import
+import SignUp from './page/SignUp';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('isLoggedIn');
+    if (stored === 'true') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    localStorage.setItem('isLoggedIn', 'true');
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
+  };
 
   return (
     <Router>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <Routes>
       
+        <Route path="/" element={<Navigate to="/calendar" />} />
+        <Route path="/calendar" element={<Calendar />} />
         <Route path="/calories" element={<Calories />} />
         <Route path="/challenge" element={<Challenge />} />
         <Route path="/exercise" element={<Exercise />} />
         <Route path="/community" element={<Community />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/signup" element={<SignUp />} /> {/* 회원가입 페이지 추가 */}
+        <Route path="/login" element={<Login setIsLoggedIn={handleLogin} />} />
+        <Route path="/signup" element={<SignUp />} />
+
+      
         <Route
           path="/myinfo"
           element={isLoggedIn ? <MyInfo /> : <Navigate to="/login" replace />}

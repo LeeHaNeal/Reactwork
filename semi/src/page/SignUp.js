@@ -1,5 +1,6 @@
 // src/page/SignUp.js
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const [username, setUsername] = useState('');
@@ -7,29 +8,28 @@ function SignUp() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate(); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // 비밀번호 확인
     if (password !== confirmPassword) {
       setError('비밀번호가 일치하지 않습니다.');
       return;
     }
 
-    // 유효성 검사 (간단한 예시로 이메일 형식만 검사)
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(email)) {
       setError('유효한 이메일 주소를 입력해주세요.');
       return;
     }
 
-    // 회원가입 로직 (여기서는 콘솔에 출력하는 방식으로 간단히 처리)
-    console.log('회원가입 정보:', { username, email, password });
-    setError('');
     
-    // 회원가입 성공 후 리디렉션 등 추가 작업을 할 수 있습니다.
+    console.log('회원가입 정보:', { username, email, password });
     alert('회원가입이 완료되었습니다!');
+
+    
+    navigate('/login');
   };
 
   return (
