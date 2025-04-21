@@ -1,4 +1,3 @@
-// src/components/CalorieChart/CalorieChart.js
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -28,11 +27,12 @@ const CalorieChart = ({ userId }) => {
 
   useEffect(() => {
     if (!userId) {
-      console.error('유효한 userId가 없습니다.'); // userId가 없으면 요청을 하지 않음
-      return;
+      console.error("유효한 userId가 없습니다."); // userId가 없을 경우 오류 처리
+      return; // userId가 없으면 차트를 렌더링하지 않음
     }
 
-    fetch(`http://localhost:8080/users/${userId}/calories`) // 서버에서 섭취 칼로리와 운동 칼로리 데이터를 받는 API 예시
+    // userId로 데이터를 요청하는 API 호출
+    fetch(`http://localhost:8080/users/${userId}/calories`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -66,14 +66,14 @@ const CalorieChart = ({ userId }) => {
       .catch(err => {
         console.error('데이터를 불러오는 데 실패했습니다.', err);
       });
-  }, [userId]); // userId가 변경될 때마다 데이터를 다시 불러옵니다.
+  }, [userId]);
 
-  if (!chartData) return <div>로딩 중...</div>; // 차트 데이터가 로드되지 않았으면 로딩 중 메시지
+  if (!chartData) return <div>로딩 중...</div>;
 
   return (
     <div>
       <h3>칼로리 차트</h3>
-      <Line data={chartData} options={{ responsive: true }} /> {/* 동적으로 데이터를 반영한 차트 렌더링 */}
+      <Line data={chartData} options={{ responsive: true }} />
     </div>
   );
 };

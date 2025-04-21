@@ -1,69 +1,51 @@
-/* 메인 컨테이너 스타일 */
 .main-container {
-  font-family: 'Noto Sans KR', sans-serif;
-  background-color: #f3f4f6;
   padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
   text-align: center;
 }
 
-/* 사용자 정보 스타일 */
 .user-info {
+  margin: 20px 0;
   font-size: 16px;
-  color: #333;
-  margin-bottom: 20px;
+  font-weight: bold;
 }
 
-/* 캐릭터 이미지 스타일 */
-.main-container img {
-  display: block;
-  margin: 0 auto 20px;
-  max-width: 150px;
+.main-container img[alt="호랑이"] {
+  margin: 20px 0;
 }
 
-/* 차트 영역 스타일 */
 .charts {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 30px;
 }
 
-.charts div {
-  width: 45%;
-}
-
-h4 {
-  font-size: 1.3rem;
-  color: #3d5a98;
+.charts h4 {
   margin-bottom: 10px;
+  color: #333;
 }
 
-/* 오늘 한 운동 아이콘 스타일 */
-.main-container div:last-of-type {
-  margin-top: 30px;
+.charts > div {
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-radius: 10px;
+  width: 300px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.main-container img {
-  width: 50px;
-  height: 50px;
+.charts p {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #ff6600;
+}
+
+.main-container div:last-child {
+  margin-top: 20px;
+}
+
+.main-container div:last-child img {
+  width: 40px;
   margin: 0 10px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.main-container img:hover {
-  transform: scale(1.1);
-}
-
-/* 차트 제목 스타일 */
-h3 {
-  font-size: 1.3rem;
-  color: #3d5a98;
-  margin-bottom: 10px;
-}
-
-/* 차트 영역 스타일 */
-.calorie-chart {
-  margin-bottom: 20px;
 }

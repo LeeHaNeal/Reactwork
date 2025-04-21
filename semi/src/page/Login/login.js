@@ -30,7 +30,7 @@ const Login = ({ setIsLoggedIn }) => {
   return (
     <div className="login-container">
       <div className="login-box">
-        <div className="login-circle">로그인 후 이용가능</div>
+        <div className="login-circle">로그인 후<br></br> 이용가능</div>
         <form onSubmit={handleLogin}>
           <div className="input-group">
             <label>아이디</label>

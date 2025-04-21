@@ -10,13 +10,14 @@
 
 /* 로그인 박스 스타일 */
 .login-box {
-  width: 380px;
+  width: 100%;
+  max-width: 380px; /* 폼 최대 너비를 380px로 제한 */
   background-color: #fff;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* 세로로 나열 */
   justify-content: center;
   align-items: center;
   text-align: center;
