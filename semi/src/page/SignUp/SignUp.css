@@ -1,0 +1,142 @@
+/* 전체 폼 스타일 */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #e9f1ff;
+    padding: 20px;
+  }
+  
+  /* 폼 박스 스타일 */
+  .form-box {
+    width: 100%;
+    max-width: 100px; /* 폼 최대 너비를 380px로 제한 */
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* 세로로 나열 */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  /* 타이틀 스타일 */
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    color: #3d5a98;
+  }
+  
+  /* 입력 필드 스타일 */
+  .input-group {
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 280px; /* 너비를 더 좁게 설정 */
+    text-align: left;
+    display: flex;
+    flex-direction: column; /* 세로로 정렬 */
+  }
+  
+  .input-group label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  /* 입력 필드 수정 */
+  input, select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #f4f9ff;
+    transition: all 0.3s ease;
+  }
+  
+  /* 입력 필드 focus 시 */
+  input:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+    background-color: #e6f0ff;
+  }
+  
+  /* 동그라미 스타일 */
+  .circle {
+    width: 80px;
+    height: 80px;
+    background-color: #a8ceff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem auto;
+    font-size: 1rem;
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* 버튼 스타일 */
+  button {
+    width: 100%;
+    max-width: 280px; /* 버튼 너비도 좁게 설정 */
+    padding: 12px;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #3d5a98;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #2a457a;
+  }
+  
+  /* 선택 버튼 스타일 */
+  .select-button {
+    width: 100%;
+    max-width: 280px;
+    padding: 12px;
+    margin-top: 1rem;
+    background-color: #3d5a98;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .select-button:hover {
+    background-color: #2a457a;
+  }
+  
+  /* 캐릭터 선택 스타일 */
+  .character-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 2rem;
+  }
+  
+  .character-container img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid #ccc;
+    transition: border-color 0.3s ease;
+  }
+  
+  .character-container img:hover {
+    border-color: #007bff;
+  }
+  
+  .character-container img.selected {
+    border-color: #007bff;
+  }
+  

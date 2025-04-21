@@ -1,0 +1,69 @@
+/* 메인 컨테이너 스타일 */
+.main-container {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #f3f4f6;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* 사용자 정보 스타일 */
+.user-info {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* 캐릭터 이미지 스타일 */
+.main-container img {
+  display: block;
+  margin: 0 auto 20px;
+  max-width: 150px;
+}
+
+/* 차트 영역 스타일 */
+.charts {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.charts div {
+  width: 45%;
+}
+
+h4 {
+  font-size: 1.3rem;
+  color: #3d5a98;
+  margin-bottom: 10px;
+}
+
+/* 오늘 한 운동 아이콘 스타일 */
+.main-container div:last-of-type {
+  margin-top: 30px;
+}
+
+.main-container img {
+  width: 50px;
+  height: 50px;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.main-container img:hover {
+  transform: scale(1.1);
+}
+
+/* 차트 제목 스타일 */
+h3 {
+  font-size: 1.3rem;
+  color: #3d5a98;
+  margin-bottom: 10px;
+}
+
+/* 차트 영역 스타일 */
+.calorie-chart {
+  margin-bottom: 20px;
+}

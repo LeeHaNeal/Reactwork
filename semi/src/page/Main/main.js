@@ -1,22 +1,28 @@
+// src/page/Main.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './main.css';
+import CalorieChart from '../../components/CalorieChart/CalorieChart';  
 
 const Main = () => {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      axios.get(`http://localhost:8080/users/${userId}`)
-        .then(res => setUser(res.data))
-        .catch(err => {
-          console.error("사용자 정보를 불러오는 데 실패했습니다.", err);
-        });
-    } else {
-      console.warn("userId 없음");
-    }
-  }, []);
+  
+useEffect(() => {
+  const userId = localStorage.getItem('userId');
+  
+  console.log("userId:", userId); 
+  
+  if (!userId) {
+    console.error("userId가 없습니다."); 
+    return; 
+  }
+
+  axios.get(`http://localhost:8080/users/${userId}`)
+    .then(res => setUser(res.data))
+    .catch(err => {
+      console.error("사용자 정보를 불러오는 데 실패했습니다.", err);
+    });
+}, []);
 
   if (!user) return <div>로딩 중...</div>;
 
@@ -33,11 +39,10 @@ const Main = () => {
       <div className="charts">
         <div>
           <h4>섭취 칼로리</h4>
-          <img src="/calories-graph.png" alt="섭취 칼로리" />
+          <CalorieChart userId={user.id} />
         </div>
         <div>
           <h4>운동 칼로리</h4>
-          <img src="/exercise-graph.png" alt="운동 칼로리" />
           <p>🔥 총 소모 칼로리: {user.caloriesBurned || 0} kcal</p>
         </div>
       </div>
