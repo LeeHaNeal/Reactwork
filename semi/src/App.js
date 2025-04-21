@@ -1,16 +1,18 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import Navbar from './components/Navbar/Navbar';
-import Main from './page/Main/main';          // 수정된 경로
-import Calories from './page/Calories/calories'; // 수정된 경로
-import Challenge from './page/Challenge/challenge'; // 수정된 경로
-import Exercise from './page/Exercise/exercise'; // 수정된 경로
-import Community from './page/Community/community';  // 수정된 경로
-import Calendar from './page/Calendar/calendar';      // 수정된 경로
-import MyInfo from './page/MyInfo/myinfo';     // 수정된 경로
-import Login from './page/Login/login';        // 수정된 경로
-import SignUp from './page/SignUp/SignUp';     // 수정된 경로
+// 컴포넌트들 import
+import Navbar from './components/Navbar/Navbar';  
+import Main from './page/Main/main';  
+import Calories from './page/Calories/calories';  
+import Challenge from './page/Challenge/challenge';  
+import Exercise from './page/Exercise/exercise';  
+import Community from './page/Community/pages/Community';  // 경로 수정: 대소문자 일치
+import Calendar from './page/Calendar/calendar';  
+import MyInfo from './page/MyInfo/myinfo';  
+import Login from './page/Login/login';  
+import SignUp from './page/SignUp/SignUp';  
+import Write from './page/Community/pages/Write';  // 글 작성 페이지 추가
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -39,20 +41,16 @@ function App() {
 
   return (
     <Router>
-      {isLoggedIn && (
-        <Navbar
-          isLoggedIn={isLoggedIn}
-          handleLogout={handleLogout}
-          isAuthLoaded={isAuthLoaded}
-        />
-      )}
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        handleLogout={handleLogout}
+        isAuthLoaded={isAuthLoaded}
+      />
       <Routes>
-        {/* ✅ 로그인 안됐으면 로그인 페이지, 로그인 됐으면 메인으로 이동 */}
         <Route
           path="/"
           element={isLoggedIn ? <Navigate to="/main" replace /> : <Login setIsLoggedIn={handleLogin} />}
         />
-
         <Route path="/main" element={isLoggedIn ? <Main /> : <Navigate to="/" replace />} />
         <Route path="/signup" element={<SignUp setIsLoggedIn={handleLogin} />} />
         <Route path="/calendar" element={isLoggedIn ? <Calendar /> : <Navigate to="/" replace />} />
@@ -61,7 +59,7 @@ function App() {
         <Route path="/exercise" element={isLoggedIn ? <Exercise /> : <Navigate to="/" replace />} />
         <Route path="/community" element={isLoggedIn ? <Community /> : <Navigate to="/" replace />} />
         <Route path="/myinfo" element={isLoggedIn ? <MyInfo /> : <Navigate to="/" replace />} />
-        
+        <Route path="/write" element={isLoggedIn ? <Write /> : <Navigate to="/" replace />} /> {/* /write 라우트 추가 */}
       </Routes>
     </Router>
   );
