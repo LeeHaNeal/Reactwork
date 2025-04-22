@@ -13,6 +13,7 @@ import MyInfo from './page/MyInfo/myinfo';
 import Login from './page/Login/login';  
 import SignUp from './page/SignUp/SignUp';  
 import Write from './page/Community/pages/Write';  // 글 작성 페이지 추가
+import Detail from './page/Community/pages/Detail';  // Detail 페이지 추가
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -58,8 +59,9 @@ function App() {
         <Route path="/challenge" element={isLoggedIn ? <Challenge /> : <Navigate to="/" replace />} />
         <Route path="/exercise" element={isLoggedIn ? <Exercise /> : <Navigate to="/" replace />} />
         <Route path="/community" element={isLoggedIn ? <Community /> : <Navigate to="/" replace />} />
+        <Route path="/post/:id" element={isLoggedIn ? <Detail /> : <Navigate to="/" replace />} /> {/* 게시글 상세 페이지 라우트 추가 */}
         <Route path="/myinfo" element={isLoggedIn ? <MyInfo /> : <Navigate to="/" replace />} />
-        <Route path="/write" element={isLoggedIn ? <Write /> : <Navigate to="/" replace />} /> {/* /write 라우트 추가 */}
+        <Route path="/write" element={isLoggedIn ? <Write /> : <Navigate to="/" replace />} /> {/* 글 작성 페이지 라우트 */}
       </Routes>
     </Router>
   );
