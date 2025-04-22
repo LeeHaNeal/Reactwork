@@ -13,9 +13,12 @@ const Community = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/posts") // 수정된 경로
-      .then((response) => setPosts(response.data))
-      .catch((error) => console.error("게시글 불러오기 실패:", error));
+      .get("http://localhost:8080/posts")  // 서버 경로
+      .then((response) => setPosts(response.data))  // DTO 데이터
+      .catch((error) => {
+        console.error("게시글 불러오기 실패:", error);
+        alert("게시글을 불러오는 데 실패했습니다.");
+      });
   }, []);
 
   const filteredPosts = posts.filter((post) =>
@@ -35,7 +38,7 @@ const Community = () => {
         <button>글 작성</button>
       </Link>
       <SearchBar searchTerm={searchTerm} onSearch={setSearchTerm} />
-      
+
       {/* 게시글이 있을 때만 List 컴포넌트 렌더링 */}
       {filteredPosts.length > 0 ? (
         <List posts={currentPosts} />
