@@ -35,7 +35,7 @@ const Navbar = ({ isLoggedIn, handleLogout, isAuthLoaded }) => {
         ) : (
           <ul className="nav-list auth-links">
             <li><Link to="/signup">회원가입</Link></li>
-            <li><Link to="/login">로그인</Link></li>
+            <li><Link to="/login">로그인</Link></li>  {/* 여기에서 Link를 사용하여 로그인 페이지로 이동 */}
           </ul>
         )}
       </div>

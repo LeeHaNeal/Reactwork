@@ -68,7 +68,6 @@ const Exercise = () => {
     }));
   };
 
-  // ✅ 운동 저장 핸들러
   const handleSaveExercise = () => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
@@ -172,7 +171,6 @@ const Exercise = () => {
           </div>
         ))}
 
-        {/* ✅ 저장 버튼 */}
         <button className="save-btn" onClick={handleSaveExercise}>
           운동 저장하기 💾
         </button>
