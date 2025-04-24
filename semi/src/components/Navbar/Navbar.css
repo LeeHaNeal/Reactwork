@@ -12,6 +12,7 @@
   align-items: center;
   justify-content: center;
   padding: 0 20px;
+
 }
 
 /* nav 리스트 스타일 */
@@ -33,6 +34,10 @@
 
 .nav-list li a:hover {
   text-decoration: underline;
+}
+
+.nav-list{
+  margin-left: 20px;
 }
 
 /* 로그인/로그아웃 버튼 우측 */

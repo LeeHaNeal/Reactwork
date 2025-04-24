@@ -14,10 +14,15 @@ const Calories = ({ userId }) => {
   const [selectedFood, setSelectedFood] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // 음식 목록을 가져오는 useEffect
+  // ✅ 한국 시간 반환
+  const getKSTDate = (date) => {
+    const kst = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    kst.setHours(0, 0, 0, 0);
+    return kst;
+  };
+
   useEffect(() => {
-    axios
-      .get('http://localhost:8080/foods')
+    axios.get('http://localhost:8080/foods')
       .then((response) => {
         setFoods(response.data);
         setIsLoading(false);
@@ -28,7 +33,6 @@ const Calories = ({ userId }) => {
       });
   }, []);
 
-  // 검색어에 맞는 음식 목록 필터링
   const handleSearch = (e) => {
     const keyword = e.target.value;
     setSearch(keyword);
@@ -43,12 +47,10 @@ const Calories = ({ userId }) => {
     setSearchResults(filtered);
   };
 
-  // 음식 선택 처리
   const handleSelectFood = (food) => {
     setSelectedFood(food);
   };
 
-  // 식사에 음식 추가
   const addFoodToMeal = (meal, food) => {
     setMeals((prev) => ({
       ...prev,
@@ -58,10 +60,9 @@ const Calories = ({ userId }) => {
     setSearchResults([]);
   };
 
-  // 식사 로그 저장
+  // ✅ 한국 시간 기준으로 저장
   const saveFoodLog = () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);  // 자정으로 맞춰서 날짜 문제 해결
+    const today = getKSTDate(new Date());
 
     const allFoods = Object.entries(meals).flatMap(([mealName, foods]) =>
       foods.map((food) => ({
@@ -70,32 +71,24 @@ const Calories = ({ userId }) => {
         quantity: 1,
         totalCalories: food.calories,
         mealTime: mealName,
-        logDate: today,  // 날짜 정보
+        logDate: today,
       }))
     );
 
     if (allFoods.length === 0) return;
 
-    axios
-      .post('http://localhost:8080/food-logs/bulk', allFoods)
+    axios.post('http://localhost:8080/food-logs/bulk', allFoods)
       .then((response) => {
         console.log('전체 식사 저장 성공', response.data);
-        alert('저장되었습니다!');  // 저장 성공 후 알림
-
-        // 저장 후 상태 초기화
-        setMeals({
-          아침: [],
-          점심: [],
-          저녁: [],
-        });
-        setSelectedFood(null);  // "선택된 음식" 초기화
+        alert('저장되었습니다!');
+        setMeals({ 아침: [], 점심: [], 저녁: [] });
+        setSelectedFood(null);
       })
       .catch((error) => {
         console.error('전체 식사 저장 실패', error);
       });
   };
 
-  // 식사에서 음식 삭제
   const removeFoodFromMeal = (meal, index) => {
     setMeals((prev) => ({
       ...prev,
@@ -103,7 +96,6 @@ const Calories = ({ userId }) => {
     }));
   };
 
-  // 총 칼로리 계산
   const getTotalCalories = () => {
     return Object.values(meals)
       .flat()
@@ -130,10 +122,7 @@ const Calories = ({ userId }) => {
               <span>{food.name} - {food.calories} kcal</span>
               <div className="search-result-buttons">
                 {["아침", "점심", "저녁"].map((meal) => (
-                  <button
-                    key={meal}
-                    onClick={() => addFoodToMeal(meal, food)}
-                  >
+                  <button key={meal} onClick={() => addFoodToMeal(meal, food)}>
                     {meal}에 추가
                   </button>
                 ))}
@@ -160,10 +149,7 @@ const Calories = ({ userId }) => {
               {meals[meal].map((food, idx) => (
                 <div key={idx} className="food-item">
                   <span>{food.name}</span>
-                  <button
-                    className="delete-button"
-                    onClick={() => removeFoodFromMeal(meal, idx)}
-                  >
+                  <button className="delete-button" onClick={() => removeFoodFromMeal(meal, idx)}>
                     🗑️
                   </button>
                 </div>
