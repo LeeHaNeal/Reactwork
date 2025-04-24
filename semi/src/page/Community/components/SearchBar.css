@@ -4,6 +4,7 @@
     height: 30px;
     border-radius: 10px;
 }
+
 .searchbarbtn {
     background-color: #3f528c;
     color: white;
@@ -20,5 +21,4 @@
     width: 35px;
     cursor: pointer;
     margin-bottom: -10px;
-   
 }

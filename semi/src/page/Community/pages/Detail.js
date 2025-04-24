@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate  } from "react-router-dom";
+import './Detail.css'
 
 const Detail = () => {
   const { id } = useParams();  // URL 파라미터에서 id를 가져옴
   const [post, setPost] = useState(null);
+  const navigate = useNavigate(); //뒤로가기
 
   useEffect(() => {
     // 게시글 데이터를 서버에서 가져옴
@@ -23,10 +25,11 @@ const Detail = () => {
   }
 
   return (
-    <div>
-      <h1>{post.title}</h1>
-      <p>{post.content}</p>
-      <p>작성자: {post.userName}</p>
+    <div className="detail">
+      <h1 className="dtitle">{post.title}</h1>
+      <p className="dname">작성자: {post.userName}</p>
+      <p className="dcontent">{post.content}</p>
+      <button className="detail-btn" onClick={() => navigate(-1)} >이전</button>
     </div>
   );
 };
