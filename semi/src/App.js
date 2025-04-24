@@ -55,17 +55,7 @@ function App() {
         />
         <Route path="/main" element={isLoggedIn ? <Main /> : <Navigate to="/" replace />} />
         <Route path="/signup" element={<SignUp setIsLoggedIn={handleLogin} />} />
-        <Route path="/calendar" element={isLoggedIn ? <Calendar /> : <Navigate to="/" replace />} />
-        <Route
-          path="/calories"
-          element={
-            isLoggedIn ? (
-              <Calories userId={localStorage.getItem('userId')} />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
+        <Route path="/calendar" element={isLoggedIn ? <Calendar userId={localStorage.getItem('userId')} /> : <Navigate to="/" replace />} />
         <Route path="/challenge" element={isLoggedIn ? <Challenge /> : <Navigate to="/" replace />} />
         <Route path="/exercise" element={isLoggedIn ? <Exercise /> : <Navigate to="/" replace />} />
         <Route path="/community" element={isLoggedIn ? <Community /> : <Navigate to="/" replace />} />

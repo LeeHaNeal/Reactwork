@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';  // useNavigate 추가
 import './calories.css';
 
 const Calories = ({ userId }) => {
@@ -15,8 +14,7 @@ const Calories = ({ userId }) => {
   const [selectedFood, setSelectedFood] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const navigate = useNavigate();
-
+  // 음식 목록을 가져오는 useEffect
   useEffect(() => {
     axios
       .get('http://localhost:8080/foods')
@@ -30,6 +28,7 @@ const Calories = ({ userId }) => {
       });
   }, []);
 
+  // 검색어에 맞는 음식 목록 필터링
   const handleSearch = (e) => {
     const keyword = e.target.value;
     setSearch(keyword);
@@ -44,10 +43,12 @@ const Calories = ({ userId }) => {
     setSearchResults(filtered);
   };
 
+  // 음식 선택 처리
   const handleSelectFood = (food) => {
     setSelectedFood(food);
   };
 
+  // 식사에 음식 추가
   const addFoodToMeal = (meal, food) => {
     setMeals((prev) => ({
       ...prev,
@@ -55,18 +56,21 @@ const Calories = ({ userId }) => {
     }));
     setSearch("");
     setSearchResults([]);
-    setSelectedFood(null);  // 음식을 추가 후 선택된 음식 상태 초기화
   };
 
+  // 식사 로그 저장
   const saveFoodLog = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);  // 자정으로 맞춰서 날짜 문제 해결
+
     const allFoods = Object.entries(meals).flatMap(([mealName, foods]) =>
       foods.map((food) => ({
-        userId: userId, // 로그인된 사용자 ID 사용
+        userId: userId,
         foodId: food.foodId,
         quantity: 1,
         totalCalories: food.calories,
         mealTime: mealName,
-        logDate: new Date(),
+        logDate: today,  // 날짜 정보
       }))
     );
 
@@ -91,6 +95,7 @@ const Calories = ({ userId }) => {
       });
   };
 
+  // 식사에서 음식 삭제
   const removeFoodFromMeal = (meal, index) => {
     setMeals((prev) => ({
       ...prev,
@@ -98,12 +103,11 @@ const Calories = ({ userId }) => {
     }));
   };
 
+  // 총 칼로리 계산
   const getTotalCalories = () => {
-    // 아침, 점심, 저녁의 칼로리를 합산
-    const totalCalories = Object.values(meals)
+    return Object.values(meals)
       .flat()
       .reduce((total, food) => total + food.calories, 0);
-    return totalCalories;
   };
 
   return (
