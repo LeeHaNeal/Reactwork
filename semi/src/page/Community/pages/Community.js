@@ -23,7 +23,7 @@ const Community = () => {
         console.error("게시글 불러오기 실패:", error);
         alert("게시글을 불러오는 데 실패했습니다.");
       });
-  }, []);
+  }, []); 
 
   const filteredPosts = Array.isArray(posts)
     ? posts.filter((post) =>
