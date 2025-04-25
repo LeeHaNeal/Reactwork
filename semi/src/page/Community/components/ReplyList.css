@@ -1,0 +1,50 @@
+.reply-section {
+  margin-top: 30px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.reply-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.reply-input {
+  flex: 1;
+  padding: 8px;
+}
+
+.reply-button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.reply-list {
+  list-style: none;
+  padding: 0;
+}
+
+.reply-item {
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 5px;
+}
+
+.reply-user {
+  font-weight: bold;
+}
+
+.reply-date {
+  margin-left: 10px;
+  color: #666;
+}
+
+.delete-btn {
+  margin-left: 10px;
+  color: red;
+  cursor: pointer;
+}

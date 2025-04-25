@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import List from "../components/List";
 import SearchBar from "../components/SearchBar";
+import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";
 import "./community.css";
 
@@ -15,6 +16,7 @@ const Community = () => {
     axios
       .get("http://localhost:8080/posts")
       .then((response) => {
+        console.log("받은 데이터:", response.data);
         setPosts(Array.isArray(response.data) ? response.data : []);
       })
       .catch((error) => {
@@ -23,9 +25,11 @@ const Community = () => {
       });
   }, []);
 
-  const filteredPosts = posts.filter((post) =>
-    post.title?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredPosts = Array.isArray(posts)
+    ? posts.filter((post) =>
+        post.title?.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
 
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
   const currentPosts = filteredPosts.slice(
@@ -39,44 +43,23 @@ const Community = () => {
         <div className="search-bar-wrapper">
           <SearchBar searchTerm={searchTerm} onSearch={setSearchTerm} />
           <Link to="/write">
-            <button className="write-button-click">글 작성</button>
+            <button className="write-button">글 작성</button>
           </Link>
           <Link to="/MyPost">
-            <button className="my-post-button">내 글</button>
+            <button className="write-button">내 글</button>
           </Link>
         </div>
-
         {filteredPosts.length > 0 ? (
-          <>
-            <List posts={currentPosts} />
-            <div className="community-pagination">
-              <button
-                onClick={() => currentPage > 1 && setCurrentPage((p) => p - 1)}
-                disabled={currentPage === 1}
-              >
-                &lt; 이전
-              </button>
-              {Array.from({ length: totalPages }, (_, i) => (
-                <button
-                  key={i}
-                  className={currentPage === i + 1 ? "active" : ""}
-                  onClick={() => setCurrentPage(i + 1)}
-                >
-                  {i + 1}
-                </button>
-              ))}
-              <button
-                onClick={() =>
-                  currentPage < totalPages && setCurrentPage((p) => p + 1)
-                }
-                disabled={currentPage === totalPages}
-              >
-                다음 &gt;
-              </button>
-            </div>
-          </>
+          <List posts={currentPosts} />
         ) : (
           <p>게시글이 없습니다.</p>
+        )}
+        {filteredPosts.length > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
         )}
       </div>
 
