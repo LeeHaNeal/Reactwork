@@ -1,12 +1,14 @@
 .detail {
-    background-color: rgba(255, 255, 255, 0.8); /* ✅ 반투명 흰색 */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);   /* ✅ 흐린 그림자 */
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     padding: 2rem;
     margin: 2rem auto;
     max-width: 800px;
-    backdrop-filter: blur(3px); 
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
 }
+
 
 .dtitle {
     font-size: 24px;
