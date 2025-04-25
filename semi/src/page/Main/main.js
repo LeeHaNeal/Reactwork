@@ -10,8 +10,9 @@ const Main = () => {
   const [todayCalories, setTodayCalories] = useState(null);
   const [burnedCalories, setBurnedCalories] = useState(null);
   const [mealCalories, setMealCalories] = useState({ breakfast: 0, lunch: 0, dinner: 0 });
+  const [darkMode, setDarkMode] = useState(false);
 
-  // ✅ 한국 시간 (KST) 기준 날짜 계산
+  // ✅ 오늘 날짜 (KST)
   const getKSTDateString = () => {
     const now = new Date();
     const utc = now.getTime() + now.getTimezoneOffset() * 60000;
@@ -20,22 +21,22 @@ const Main = () => {
   };
 
   useEffect(() => {
+    const savedMode = localStorage.getItem('darkMode') === 'true';
+    setDarkMode(savedMode);
+    document.body.classList.toggle('dark-mode', savedMode);
+
     const userId = localStorage.getItem('userId');
-    if (!userId) {
-      console.error("❌ userId 없음");
-      return;
-    }
+    if (!userId) return;
 
     const today = getKSTDateString();
 
     axios.get(`http://localhost:8080/users/${userId}`)
       .then(res => setUser(res.data))
-      .catch(err => console.error("❌ 사용자 정보 오류", err));
+      .catch(err => console.error("사용자 정보 오류", err));
 
     axios.get(`http://localhost:8080/food-logs/${userId}?date=${today}`)
       .then(res => {
         const categorized = { breakfast: 0, lunch: 0, dinner: 0 };
-
         res.data.forEach(item => {
           const meal = item.MEAL_TIME || item.mealTime;
           const kcal = item.TOTAL_CALORIES || item.totalCalories || 0;
@@ -48,24 +49,24 @@ const Main = () => {
 
           if (key) categorized[key] += kcal;
         });
-
         setMealCalories(categorized);
         setTodayCalories(
           categorized.breakfast + categorized.lunch + categorized.dinner
         );
       })
-      .catch(err => {
-        console.error("❌ 섭취 기록 오류", err);
-        setTodayCalories(0);
-      });
+      .catch(() => setTodayCalories(0));
 
     axios.get(`http://localhost:8080/users/${userId}/burned-calories`)
       .then(res => setBurnedCalories(res.data || 0))
-      .catch(err => {
-        console.error("❌ 운동 칼로리 오류", err);
-        setBurnedCalories(0);
-      });
+      .catch(() => setBurnedCalories(0));
   }, []);
+
+  const toggleDarkMode = () => {
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    localStorage.setItem('darkMode', newMode);
+    document.body.classList.toggle('dark-mode', newMode);
+  };
 
   if (!user || todayCalories === null || burnedCalories === null) {
     return <div style={{ textAlign: 'center' }}>로딩 중...</div>;
@@ -82,36 +83,26 @@ const Main = () => {
 
   return (
     <div className="main-container">
+      <button onClick={toggleDarkMode} className="dark-toggle">
+        {darkMode ? '☀️ 라이트 모드' : '🌙 다크 모드'}
+      </button>
+
       <div className="user-info">
-        키: {user.height}cm | 현재 몸무게: {user.weight}kg | 목표 몸무게: {user.goalWeight}kg |
-        도전 점수: {user.challengeScore}점 | 🔥 잔여 칼로리: {remainingCalories} kcal
+        키: {user.height}cm | 현재 몸무게: {user.weight}kg | 목표: {user.goalWeight}kg |
+        도전 점수: {user.challengeScore} | 🔥 잔여 칼로리: {remainingCalories} kcal
       </div>
 
-      <img src="/tiger.png" alt="호랑이" style={{ width: '120px', marginBottom: '10px' }} />
+      <img src="/tiger.png" alt="호랑이" style={{ width: '120px', marginBottom: '15px' }} />
 
       <div className="graph-wrapper">
         <ResponsiveContainer>
-          <BarChart
-            data={chartData}
-            margin={{ top: 20, right: 30, left: 0, bottom: 10 }}
-            barSize={60}
-            barCategoryGap="25%"
-          >
+          <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 10 }} barSize={60}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis domain={[-300, 800]} />
-            <Tooltip
-              contentStyle={{ backgroundColor: '#fefefe', borderRadius: '10px', border: '1px solid #ccc' }}
-              formatter={(value) => [`${value} kcal`, '칼로리']}
-            />
+            <Tooltip />
             <Legend />
-            <Bar
-              dataKey="kcal"
-              radius={[10, 10, 0, 0]}
-              isAnimationActive={true}
-              animationDuration={800}
-              fill="#82ca9d"
-            />
+            <Bar dataKey="kcal" radius={[10, 10, 0, 0]} isAnimationActive fill="#82ca9d" />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -123,7 +114,7 @@ const Main = () => {
         </div>
         <div>
           <h4>운동 칼로리</h4>
-          <p>🔥 총 소모 칼로리: {burnedCalories} kcal</p>
+          <p>🔥 {burnedCalories} kcal</p>
         </div>
       </div>
 

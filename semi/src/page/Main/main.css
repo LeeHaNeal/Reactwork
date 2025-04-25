@@ -55,7 +55,7 @@
   width: 100%;
   max-width: 800px;
   margin: 0 auto 40px;
-  height: 320px;
+  height: 260px; /* ✅ 기존 320px → 260px */
   background: #fff;
   border-radius: 16px;
   padding: 20px;
@@ -86,4 +86,49 @@
   .main-container .charts > div {
     width: 90%;
   }
+}
+/* 토글 버튼 */
+.dark-toggle {
+  background: transparent;
+  border: 2px solid #aaa;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background 0.3s;
+}
+.dark-toggle:hover {
+  background: #eaeaea;
+}
+
+/* ✅ 다크 모드 스타일링 */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .main-container {
+  background-color: #1a1a1a;
+}
+
+body.dark-mode .user-info,
+body.dark-mode .charts p,
+body.dark-mode .charts h4 {
+  color: #ddd;
+}
+
+body.dark-mode .charts > div {
+  background-color: #2a2a2a;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .graph-wrapper {
+  background: #2c2c2c;
+  box-shadow: 0 3px 8px rgba(255,255,255,0.08);
+}
+
+body.dark-mode .dark-toggle {
+  border-color: #eee;
+  color: #eee;
 }
