@@ -15,6 +15,14 @@ const Calories = ({ userId }) => {
   const [pageGroup, setPageGroup] = useState(0);
   const itemsPerPage = 10;
 
+  // ✅ 한국 시간 기준 날짜 반환 함수
+  const getKSTDateString = () => {
+    const now = new Date();
+    const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+    const kst = new Date(utc + 9 * 60 * 60 * 1000);
+    return kst.toISOString().split('T')[0]; // 'yyyy-mm-dd'
+  };
+
   useEffect(() => {
     axios.get('http://localhost:8080/foods')
       .then((res) => {
@@ -77,9 +85,9 @@ const Calories = ({ userId }) => {
   };
 
   const saveFoodLog = () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
+    const todayStr = getKSTDateString();
+    const today = new Date(todayStr); // 자정 기준 Date 객체로 저장
+  
     const allFoods = Object.entries(meals).flatMap(([mealName, foods]) =>
       foods.map((food) => ({
         userId,
@@ -181,7 +189,7 @@ const Calories = ({ userId }) => {
                 불고기, 잡채, 돈까스, 삼겹살: 200g<br />
                 된장찌개, 순두부찌개, 갈비탕: 250g<br />
                 김치찌개, 국수, 닭볶음탕: 300g<br />
-                비빔meal, 볶음meal: 350g
+                비빔밥, 볶음밥: 350g
               </p>
             </div>
           </div>

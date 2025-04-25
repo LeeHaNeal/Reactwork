@@ -5,8 +5,9 @@ import './main.css';
 const Main = () => {
   const [user, setUser] = useState(null);
   const [todayCalories, setTodayCalories] = useState(null);
-  const [burnedCalories, setBurnedCalories] = useState(null); // ✅ 운동 칼로리 상태 추가
+  const [burnedCalories, setBurnedCalories] = useState(null);
 
+  // ✅ 정확한 한국 시간 기준 날짜 함수
   const getKSTDateString = () => {
     const now = new Date();
     const kst = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
@@ -25,8 +26,10 @@ const Main = () => {
       .then(res => setUser(res.data))
       .catch(err => console.error("사용자 정보를 불러오는 데 실패했습니다.", err));
 
-    // 오늘 섭취 칼로리
+    // ✅ KST 기준 오늘 날짜
     const today = getKSTDateString();
+
+    // 섭취 칼로리
     axios.get(`http://localhost:8080/food-logs/${userId}?date=${today}`)
       .then(res => {
         const total = res.data.reduce((sum, item) => sum + item.totalCalories, 0);
@@ -37,14 +40,13 @@ const Main = () => {
         setTodayCalories(0);
       });
 
-    // ✅ 오늘 운동 칼로리
+    // 소모 칼로리
     axios.get(`http://localhost:8080/users/${userId}/burned-calories`)
       .then(res => setBurnedCalories(res.data || 0))
       .catch(err => {
         console.error("운동 칼로리 불러오기 실패", err);
         setBurnedCalories(0);
       });
-
   }, []);
 
   if (!user || todayCalories === null || burnedCalories === null) {

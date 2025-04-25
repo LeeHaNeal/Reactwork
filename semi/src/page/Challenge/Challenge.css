@@ -4,17 +4,18 @@
   margin: 0 auto;
   padding: 30px 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f7fa;
+  background-color: #f4f6fa;
 }
 
-/* 제목 정렬 */
+/* 제목 스타일 */
 h1, h2 {
   text-align: center;
   margin-bottom: 25px;
-  color: #2c3e50;
+  color: #1a2b49;
+  font-weight: 800;
 }
 
-/* 필터 드롭다운 오른쪽 정렬 */
+/* 필터 영역 */
 .difficulty-filter {
   display: flex;
   justify-content: flex-end;
@@ -29,17 +30,16 @@ h1, h2 {
   color: #34495e;
 }
 
-/* 드롭다운 꾸미기 */
 .difficulty-filter select {
   padding: 8px 12px;
   font-size: 1rem;
   border-radius: 8px;
   border: 1px solid #ccc;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-/* 챌린지 카드 그리드 */
+/* 챌린지 카드 레이아웃 */
 .challenge-list {
   display: flex;
   flex-wrap: wrap;
@@ -48,57 +48,72 @@ h1, h2 {
   margin-bottom: 40px;
 }
 
-/* 카드 디자인 */
-/* 카드 스타일 */
+/* 챌린지 카드 디자인 */
 .challenge-card {
   flex: 1 1 22%;
   max-width: 22%;
   min-width: 0;
-  background: linear-gradient(to bottom right, #ffffff, #eef2f5);
+  background: linear-gradient(to bottom right, #fefefe, #f0f3f7);
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
   padding: 5px;
-  transition: transform 0.2s ease-in-out;
+  transition: all 0.3s ease;
   text-align: center;
+  border: 1px solid #e0e0e0;
+  position: relative;
 }
 
 .challenge-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 .challenge-card h3 {
-  color: #2c3e50;
+  color: #1f3a6a;
   margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;  
+  border-bottom: 1px solid #dbe2ef;
+  padding-bottom: 6px;
 }
 
 .challenge-card p {
   margin: 6px 0;
   font-size: 0.95rem;
-  color: #555;
+  color: #4b4b4b;
 }
 
 .challenge-card button {
-  margin-top: 10px;
-  padding: 8px 14px;
-  background-color: #007bff;
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: linear-gradient(to right, #007bff, #0056b3);
   color: white;
-  font-weight: bold;
+  font-weight: 600;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  margin-left: 8px;
 }
 
 .challenge-card button:hover {
-  background-color: #0056b3;
+  background: linear-gradient(to right, #0056b3, #00408a);
+  transform: scale(1.05);
 }
 
-/* 챌린지 추가 폼 */
+/* 진행 중 카드 강조 */
+.challenge-card.in-progress {
+  background: linear-gradient(to bottom right, #e8f0ff, #dbefff);
+  border: 2px solid #3d7bff;
+}
+
+/* 챌린지 폼 */
 .challenge-form {
   max-width: 500px;
   margin: 0 auto 60px;
   padding: 20px;
-  background-color: #fff;
+  background-color: #ffffff;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   display: flex;
@@ -132,10 +147,10 @@ h1, h2 {
 }
 
 .challenge-form button:hover {
-  background-color: #218838;
+  background-color: #1e8038;
 }
 
-/* 반응형 처리 */
+/* 반응형 */
 @media (max-width: 992px) {
   .challenge-card {
     flex: 0 0 calc(50% - 20px);
