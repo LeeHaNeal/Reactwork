@@ -1,50 +1,68 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {
+  BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend
+} from 'recharts';
 import './main.css';
 
 const Main = () => {
   const [user, setUser] = useState(null);
   const [todayCalories, setTodayCalories] = useState(null);
   const [burnedCalories, setBurnedCalories] = useState(null);
+  const [mealCalories, setMealCalories] = useState({ breakfast: 0, lunch: 0, dinner: 0 });
 
-  // ✅ 정확한 한국 시간 기준 날짜 함수
+  // ✅ 한국 시간 (KST) 기준 날짜 계산
   const getKSTDateString = () => {
     const now = new Date();
-    const kst = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+    const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+    const kst = new Date(utc + 9 * 60 * 60000);
     return kst.toISOString().split('T')[0];
   };
 
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     if (!userId) {
-      console.error("userId가 없습니다.");
+      console.error("❌ userId 없음");
       return;
     }
 
-    // 사용자 정보
-    axios.get(`http://localhost:8080/users/${userId}`)
-      .then(res => setUser(res.data))
-      .catch(err => console.error("사용자 정보를 불러오는 데 실패했습니다.", err));
-
-    // ✅ KST 기준 오늘 날짜
     const today = getKSTDateString();
 
-    // 섭취 칼로리
+    axios.get(`http://localhost:8080/users/${userId}`)
+      .then(res => setUser(res.data))
+      .catch(err => console.error("❌ 사용자 정보 오류", err));
+
     axios.get(`http://localhost:8080/food-logs/${userId}?date=${today}`)
       .then(res => {
-        const total = res.data.reduce((sum, item) => sum + item.totalCalories, 0);
-        setTodayCalories(total);
+        const categorized = { breakfast: 0, lunch: 0, dinner: 0 };
+
+        res.data.forEach(item => {
+          const meal = item.MEAL_TIME || item.mealTime;
+          const kcal = item.TOTAL_CALORIES || item.totalCalories || 0;
+
+          const key =
+            meal === "아침" ? "breakfast" :
+            meal === "점심" ? "lunch" :
+            meal === "저녁" ? "dinner" :
+            null;
+
+          if (key) categorized[key] += kcal;
+        });
+
+        setMealCalories(categorized);
+        setTodayCalories(
+          categorized.breakfast + categorized.lunch + categorized.dinner
+        );
       })
       .catch(err => {
-        console.error("오늘 섭취 칼로리 불러오기 실패", err);
+        console.error("❌ 섭취 기록 오류", err);
         setTodayCalories(0);
       });
 
-    // 소모 칼로리
     axios.get(`http://localhost:8080/users/${userId}/burned-calories`)
       .then(res => setBurnedCalories(res.data || 0))
       .catch(err => {
-        console.error("운동 칼로리 불러오기 실패", err);
+        console.error("❌ 운동 칼로리 오류", err);
         setBurnedCalories(0);
       });
   }, []);
@@ -55,14 +73,48 @@ const Main = () => {
 
   const remainingCalories = todayCalories - burnedCalories;
 
+  const chartData = [
+    { name: '아침', kcal: mealCalories.breakfast },
+    { name: '점심', kcal: mealCalories.lunch },
+    { name: '저녁', kcal: mealCalories.dinner },
+    { name: '운동', kcal: -burnedCalories },
+  ];
+
   return (
     <div className="main-container">
       <div className="user-info">
-        키 : {user.height}cm | 현재 몸무게 : {user.weight}kg | 목표 몸무게 : {user.goalWeight}kg |
-        도전 점수 : {user.challengeScore}점 | 🔥 잔여 칼로리 : {remainingCalories}kcal
+        키: {user.height}cm | 현재 몸무게: {user.weight}kg | 목표 몸무게: {user.goalWeight}kg |
+        도전 점수: {user.challengeScore}점 | 🔥 잔여 칼로리: {remainingCalories} kcal
       </div>
 
-      <img src="/tiger.png" alt="호랑이" style={{ width: '150px' }} />
+      <img src="/tiger.png" alt="호랑이" style={{ width: '120px', marginBottom: '10px' }} />
+
+      <div className="graph-wrapper">
+        <ResponsiveContainer>
+          <BarChart
+            data={chartData}
+            margin={{ top: 20, right: 30, left: 0, bottom: 10 }}
+            barSize={60}
+            barCategoryGap="25%"
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis domain={[-300, 800]} />
+            <Tooltip
+              contentStyle={{ backgroundColor: '#fefefe', borderRadius: '10px', border: '1px solid #ccc' }}
+              formatter={(value) => [`${value} kcal`, '칼로리']}
+            />
+            <Legend />
+            <Bar
+              dataKey="kcal"
+              radius={[10, 10, 0, 0]}
+              isAnimationActive={true}
+              animationDuration={800}
+              fill="#82ca9d"
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
 
       <div className="charts">
         <div>
@@ -75,11 +127,11 @@ const Main = () => {
         </div>
       </div>
 
-      <div>
+      <div style={{ marginTop: '20px' }}>
         오늘 한 운동 :
-        <img src="/icon1.png" alt="운동1" />
-        <img src="/icon2.png" alt="운동2" />
-        <img src="/icon3.png" alt="운동3" />
+        <img src="/icon1.png" alt="운동1" style={{ margin: '0 10px' }} />
+        <img src="/icon2.png" alt="운동2" style={{ margin: '0 10px' }} />
+        <img src="/icon3.png" alt="운동3" style={{ margin: '0 10px' }} />
       </div>
     </div>
   );
