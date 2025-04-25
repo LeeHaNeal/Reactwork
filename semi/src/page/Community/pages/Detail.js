@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import ReplyList from "../components/ReplyList"; // 댓글 추가
+import ReplyList from "../components/ReplyList";
 import './Detail.css';
 
 const Detail = () => {
@@ -9,17 +9,15 @@ const Detail = () => {
   const [post, setPost] = useState(null);
   const navigate = useNavigate();
 
+  const currentUser = localStorage.getItem("userId");
+
   useEffect(() => {
     axios.get(`http://localhost:8080/posts/${id}`)
-      .then((res) => {
-        setPost(res.data);
-      })
+      .then((res) => setPost(res.data))
       .catch((err) => {
         console.error("게시글 불러오기 실패:", err);
       });
   }, [id]);
-
-  const currentUser = localStorage.getItem("userId");
 
   const handleEdit = () => {
     navigate(`/edit/${id}`);
@@ -27,7 +25,9 @@ const Detail = () => {
 
   const handleDelete = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
-      axios.delete(`http://localhost:8080/posts/${id}`)
+      axios.delete(`http://localhost:8080/posts/${id}`, {
+        data: { userId: currentUser }, // 🔥 중요
+      })
         .then(() => {
           alert("삭제 완료되었습니다.");
           navigate("/community");
@@ -43,19 +43,22 @@ const Detail = () => {
 
   return (
     <div className="detail">
-      <h1 className="dtitle">{post.title}</h1>
+      <h1 className="dtitle">
+        {post.isNotice && <span className="notice-tag">[공지]</span>}
+        {post.title}
+      </h1>
       <p className="dname">작성자: {post.userName}</p>
       <p className="dcontent">{post.content}</p>
-      <button className="detail-btn" onClick={() => navigate(-1)}>이전</button>
 
-      {currentUser === post.userId && (
+      {(currentUser === post.userId || currentUser === "admin") && (
         <div className="detail-button-group">
           <button className="detail-button edit" onClick={handleEdit}>수정</button>
           <button className="detail-button delete" onClick={handleDelete}>삭제</button>
         </div>
       )}
 
-      {/* ✅ 댓글 리스트 컴포넌트 렌더링 */}
+      <button className="detail-btn" onClick={() => navigate(-1)}>이전</button>
+
       <ReplyList />
     </div>
   );
