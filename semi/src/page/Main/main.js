@@ -1,7 +1,8 @@
+// 📁 page/Main/Main.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend
+  BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend ,Cell
 } from 'recharts';
 import './main.css';
 
@@ -75,9 +76,7 @@ const Main = () => {
     axios.get(`http://localhost:8080/api/exercise-types/today`, {
       params: { userId }
     })
-      .then(res => {
-        setExerciseTypes(res.data);
-      })
+      .then(res => setExerciseTypes(res.data))
       .catch(err => {
         console.error("오늘 운동 타입 불러오기 실패", err);
         setExerciseTypes([]);
@@ -95,8 +94,12 @@ const Main = () => {
     { name: '아침', kcal: mealCalories.breakfast },
     { name: '점심', kcal: mealCalories.lunch },
     { name: '저녁', kcal: mealCalories.dinner },
-    { name: '운동', kcal: -burnedCalories },
+    { name: '운동', kcal: burnedCalories },
   ];
+  
+  
+  
+  
 
   return (
     <div className="main-container">
@@ -108,20 +111,51 @@ const Main = () => {
       <img
         src={mainCharacterImages[user.profileImageUrl] || "/img/default.jpg"}
         alt="내 캐릭터"
-        style={{ width: "500px", borderRadius: "10px" }}
+        style={{ width: "300px", borderRadius: "16px", margin: "20px 0", boxShadow: "0 6px 12px rgba(0, 0, 0, 0.1)" }}
       />
 
       <div className="graph-wrapper">
-        <ResponsiveContainer>
-          <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 10 }} barSize={60}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis domain={[-300, 800]} />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="kcal" radius={[10, 10, 0, 0]} isAnimationActive fill="#82ca9d" />
-          </BarChart>
-        </ResponsiveContainer>
+      <ResponsiveContainer>
+        <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 10 }} barSize={60}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis domain={[0, 800]} />
+          <Tooltip />
+          <Legend
+              verticalAlign="top"
+              align="right"
+              content={() => (
+                <div style={{
+                  display: 'flex', justifyContent: 'flex-end',  marginBottom: '10px', fontSize: '13px',color: '#555', fontFamily: 'Noto Sans KR, Arial, sans-serif',
+                   gap: '14px', paddingRight: '20px' 
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div style={{ width: '10px', height: '10px', backgroundColor: '#82ca9d', borderRadius: '50%', marginRight: '6px' }}></div>
+                    식사
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div style={{ width: '10px', height: '10px', backgroundColor: '#ff7f7f', borderRadius: '50%', marginRight: '6px' }}></div>
+                    운동
+                  </div>
+                </div>
+              )}
+            />
+          <Bar
+            dataKey="kcal"
+            radius={[10, 10, 0, 0]}
+            isAnimationActive
+            label={{ position: 'top', fontSize: 12, fill: '#555' }}
+          >
+            {chartData.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={entry.name === '운동' ? '#ff7f7f' : '#82ca9d'}
+              />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+
       </div>
 
       <div className="charts">
