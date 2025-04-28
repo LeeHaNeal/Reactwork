@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Navbar.css';  
+import './Navbar.css';
 
 const Navbar = ({ isLoggedIn, handleLogout, isAuthLoaded }) => {
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userId');
 
-  
+
   const onLogoutClick = () => {
     handleLogout();
-    navigate('/');  
+    navigate('/');
   };
 
   return (
@@ -28,14 +29,17 @@ const Navbar = ({ isLoggedIn, handleLogout, isAuthLoaded }) => {
           </ul>
         </div>
 
-        {/* 우측 로그인/로그아웃 */}
+     
         <div className="nav-right">
           {isAuthLoaded && isLoggedIn ? (
-            <button onClick={onLogoutClick} className="logout-button">로그아웃</button>
+            <>
+              {userId && <span className="welcome-text">{userId}님 환영합니다</span>}
+              <button onClick={onLogoutClick} className="logout-button">로그아웃</button>
+            </>
           ) : (
             <ul className="nav-list auth-links">
               <li><Link to="/signup">회원가입</Link></li>
-              <li><Link to="/login">로그인</Link></li>  {/* 여기에서 Link를 사용하여 로그인 페이지로 이동 */}
+              <li><Link to="/login">로그인</Link></li>
             </ul>
           )}
         </div>
