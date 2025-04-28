@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Navbar.css';  // 스타일링을 위한 CSS 파일
+import './Navbar.css';  
 
 const Navbar = ({ isLoggedIn, handleLogout, isAuthLoaded }) => {
   const navigate = useNavigate();
 
-  // 로그아웃 클릭 시 로그아웃 처리 및 홈으로 이동
+  
   const onLogoutClick = () => {
     handleLogout();
-    navigate('/');  // 로그아웃 후 홈으로 이동
+    navigate('/');  
   };
 
   return (

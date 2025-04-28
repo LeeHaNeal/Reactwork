@@ -1,13 +1,13 @@
-/* main.css */
+
 .main-container {
-  padding: 40px 20px; /* ✅ 넉넉한 여백 */
+  padding: 40px 20px;
   font-family: 'Noto Sans KR', 'Arial', sans-serif;
   text-align: center;
   background-color: #f9f9fc;
   min-height: 100vh;
 }
 
-/* 유저 정보 */
+
 .main-container .user-info {
   margin: 30px 0 20px;
   font-size: 17px;
@@ -15,21 +15,21 @@
   color: #333;
 }
 
-/* 섭취/운동 카드 */
+
 .main-container .charts {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 30px; /* ✅ 두 번째 css의 gap=40px → 30px로 조정 */
+  gap: 30px; 
   margin-top: 30px;
-  margin-bottom: 30px; /* ✅ 추가 */
+  margin-bottom: 30px; 
 }
 
 .main-container .charts > div {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 12px;
-  width: 260px; /* ✅ 300px 아니고 260px로 유지 */
+  width: 260px; 
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease;
 }
@@ -38,7 +38,7 @@
   transform: translateY(-4px);
 }
 
-/* 섭취/운동 내부 텍스트 */
+
 .main-container .charts h4 {
   font-size: 18px;
   color: #3f528c;
@@ -51,7 +51,7 @@
   color: #444;
 }
 
-/* 그래프 래퍼 */
+
 .main-container .graph-wrapper {
   width: 100%;
   max-width: 800px;
@@ -63,7 +63,7 @@
   box-shadow: 0 3px 8px rgba(0,0,0,0.05);
 }
 
-/* 운동 아이콘 */
+
 .main-container img[alt^="운동"] {
   width: 40px;
   height: 40px;
@@ -71,13 +71,8 @@
   vertical-align: middle;
 }
 
-/* 타이거 이미지 */
-.main-container img[alt="호랑이"] {
-  width: 110px;
-  margin-bottom: 15px;
-}
 
-/* 반응형 */
+
 @media (max-width: 600px) {
   .main-container .charts {
     flex-direction: column;
@@ -89,7 +84,7 @@
   }
 }
 
-/* 토글 버튼 */
+
 .dark-toggle {
   background: transparent;
   border: 2px solid #aaa;
@@ -105,33 +100,3 @@
   background: #eaeaea;
 }
 
-/* 다크 모드 스타일링 */
-body.dark-mode {
-  background-color: #121212;
-  color: #e0e0e0;
-}
-
-body.dark-mode .main-container {
-  background-color: #1a1a1a;
-}
-
-body.dark-mode .user-info,
-body.dark-mode .charts p,
-body.dark-mode .charts h4 {
-  color: #ddd;
-}
-
-body.dark-mode .charts > div {
-  background-color: #2a2a2a;
-  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
-}
-
-body.dark-mode .graph-wrapper {
-  background: #2c2c2c;
-  box-shadow: 0 3px 8px rgba(255,255,255,0.08);
-}
-
-body.dark-mode .dark-toggle {
-  border-color: #eee;
-  color: #eee;
-}
