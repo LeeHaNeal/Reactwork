@@ -46,8 +46,6 @@ const ReplyList = () => {
   };
 
   const handleUpdate = (commentId) => {
-    console.log("수정 요청:", userId, editingContent);
-  
     axios.post(`http://localhost:8080/posts/${id}/comments/${commentId}/edit`, {
       userId: userId,
       content: editingContent
@@ -59,7 +57,7 @@ const ReplyList = () => {
       alert("수정 권한이 없습니다.");
     });
   };
-  
+
   return (
     <div className="reply-section">
       <h3>💬 댓글</h3>
@@ -78,44 +76,51 @@ const ReplyList = () => {
       <ul className="reply-list">
         {replies.map((reply) => (
           <li key={reply.id} className="reply-item">
-            <strong className="reply-user">{reply.userId}</strong>
-            <span className="reply-date">
-              ({new Date(reply.createdAt).toLocaleString("ko-KR", {
-                year: "2-digit",
-                month: "2-digit",
-                day: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: false
-              })})
-            </span>:{" "}
+            <div className="reply-top">
+              <strong className="reply-user">{reply.userId}</strong>
+              <span className="reply-date">
+                ({new Date(reply.createdAt).toLocaleString("ko-KR", {
+                  year: "2-digit",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false
+                })})
+              </span>
+            </div>
 
             {editingId === reply.id ? (
               <>
                 <input
+                  className="reply-edit-input"
                   value={editingContent}
                   onChange={(e) => setEditingContent(e.target.value)}
                 />
-                <button onClick={() => handleUpdate(reply.id)}>저장</button>
-                <button onClick={() => setEditingId(null)}>취소</button>
+                <div className="reply-actions">
+                  <button onClick={() => handleUpdate(reply.id)}>저장</button>
+                  <button onClick={() => setEditingId(null)}>취소</button>
+                </div>
               </>
             ) : (
-              <span>{reply.content}</span>
-            )}
-
-            {String(reply.userId) === String(userId) && editingId !== reply.id && (
               <>
-                <button
-                  onClick={() => {
-                    setEditingId(reply.id);
-                    setEditingContent(reply.content);
-                  }}
-                >
-                  수정
-                </button>
-                <button onClick={() => handleDelete(reply.id)} className="delete-btn">
-                  삭제
-                </button>
+                <div className="reply-content">{reply.content}</div>
+
+                {String(reply.userId) === String(userId) && (
+                  <div className="reply-actions">
+                    <button
+                      onClick={() => {
+                        setEditingId(reply.id);
+                        setEditingContent(reply.content);
+                      }}
+                    >
+                      수정
+                    </button>
+                    <button onClick={() => handleDelete(reply.id)} className="delete-btn">
+                      삭제
+                    </button>
+                  </div>
+                )}
               </>
             )}
           </li>

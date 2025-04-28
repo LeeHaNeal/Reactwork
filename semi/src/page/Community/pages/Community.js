@@ -12,24 +12,23 @@ const Community = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 5;
 
+  // ✅ posts 불러오는 함수 분리
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/posts");
+      setPosts(Array.isArray(response.data) ? response.data : []);
+    } catch (error) {
+      console.error("게시글 불러오기 실패:", error);
+    }
+  };
+
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/posts")
-      .then((response) => {
-        console.log("받은 데이터:", response.data);
-        setPosts(Array.isArray(response.data) ? response.data : []);
-      })
-      .catch((error) => {
-        console.error("게시글 불러오기 실패:", error);
-        alert("게시글을 불러오는 데 실패했습니다.");
-      });
+    fetchPosts();
   }, []); 
 
-  const filteredPosts = Array.isArray(posts)
-    ? posts.filter((post) =>
-        post.title?.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : [];
+  const filteredPosts = posts.filter((post) =>
+    post.title?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
   const currentPosts = filteredPosts.slice(
@@ -49,11 +48,13 @@ const Community = () => {
             <button className="write-button">내 글</button>
           </Link>
         </div>
+
         {filteredPosts.length > 0 ? (
-          <List posts={currentPosts} />
+          <List posts={currentPosts} fetchPosts={fetchPosts} />
         ) : (
           <p>게시글이 없습니다.</p>
         )}
+        
         {filteredPosts.length > 0 && (
           <Pagination
             currentPage={currentPage}
@@ -63,7 +64,6 @@ const Community = () => {
         )}
       </div>
 
-      {/* 랭킹 박스 */}
       <div className="rank-box">
         <div className="crown">👑</div>
         <ol>

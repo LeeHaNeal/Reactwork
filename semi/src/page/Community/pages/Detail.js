@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import ReplyList from "../components/ReplyList";
@@ -8,17 +8,22 @@ const Detail = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const navigate = useNavigate();
-
   const currentUser = localStorage.getItem("userId");
 
-  useEffect(() => {
-    axios.get(`http://localhost:8080/posts/${id}`)
-      .then((res) => setPost(res.data))
-      .catch((err) => {
-        console.error("게시글 불러오기 실패:", err);
-      });
-  }, [id]);
+  const hasIncreasedView = useRef(false); // ✅ 조회수 중복 방지용 ref
 
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8080/posts/${id}`);
+        setPost(res.data);
+      } catch (error) {
+        console.error('게시글 불러오기 실패:', error);
+      }
+    };
+    fetchPost();
+  }, [id]);
+  
   const handleEdit = () => {
     navigate(`/edit/${id}`);
   };
@@ -26,7 +31,7 @@ const Detail = () => {
   const handleDelete = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       axios.delete(`http://localhost:8080/posts/${id}`, {
-        data: { userId: currentUser }, // 🔥 중요
+        data: { userId: currentUser },
       })
         .then(() => {
           alert("삭제 완료되었습니다.");
@@ -48,6 +53,7 @@ const Detail = () => {
         {post.title}
       </h1>
       <p className="dname">작성자: {post.userName}</p>
+      <p className="dviews">조회수: {post.views}</p>
       <p className="dcontent">{post.content}</p>
 
       {(currentUser === post.userId || currentUser === "admin") && (

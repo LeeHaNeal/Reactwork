@@ -10,13 +10,27 @@ const Main = () => {
   const [todayCalories, setTodayCalories] = useState(null);
   const [burnedCalories, setBurnedCalories] = useState(null);
   const [mealCalories, setMealCalories] = useState({ breakfast: 0, lunch: 0, dinner: 0 });
+  const [exerciseTypes, setExerciseTypes] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
 
-  // ✅ 오늘 날짜 (KST)
+  const mainCharacterImages = {
+    "0": "/img/main1.png",
+    "1": "/img/main2.png",
+    "2": "/img/main3.png",
+    "3": "/img/main4.png",
+  };
+
+  const typeIconMap = {
+    유산소: "/img/img1.png",
+    근력: "/img/img2.png",
+    유연성: "/img/img3.png",
+    일상활동: "/img/img4.png",
+    균형감각: "/img/img5.png"
+  };
+
   const getKSTDateString = () => {
     const now = new Date();
-    const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-    const kst = new Date(utc + 9 * 60 * 60000);
+    const kst = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
     return kst.toISOString().split('T')[0];
   };
 
@@ -26,13 +40,16 @@ const Main = () => {
     document.body.classList.toggle('dark-mode', savedMode);
 
     const userId = localStorage.getItem('userId');
-    if (!userId) return;
+    if (!userId) {
+      console.error("userId가 없습니다.");
+      return;
+    }
 
     const today = getKSTDateString();
 
     axios.get(`http://localhost:8080/users/${userId}`)
       .then(res => setUser(res.data))
-      .catch(err => console.error("사용자 정보 오류", err));
+      .catch(err => console.error("사용자 정보 불러오기 실패", err));
 
     axios.get(`http://localhost:8080/food-logs/${userId}?date=${today}`)
       .then(res => {
@@ -59,6 +76,18 @@ const Main = () => {
     axios.get(`http://localhost:8080/users/${userId}/burned-calories`)
       .then(res => setBurnedCalories(res.data || 0))
       .catch(() => setBurnedCalories(0));
+
+    axios.get(`http://localhost:8080/api/exercise-types/today`, {
+      params: { userId }
+    })
+      .then(res => {
+        setExerciseTypes(res.data);
+      })
+      .catch(err => {
+        console.error("오늘 운동 타입 불러오기 실패", err);
+        setExerciseTypes([]);
+      });
+
   }, []);
 
   const toggleDarkMode = () => {
@@ -88,11 +117,15 @@ const Main = () => {
       </button>
 
       <div className="user-info">
-        키: {user.height}cm | 현재 몸무게: {user.weight}kg | 목표: {user.goalWeight}kg |
-        도전 점수: {user.challengeScore} | 🔥 잔여 칼로리: {remainingCalories} kcal
+        키: {user.height}cm | 현재 몸무게: {user.weight}kg | 목표 몸무게: {user.goalWeight}kg |
+        도전 점수: {user.challengeScore}점 | 🔥 잔여 칼로리: {remainingCalories}kcal
       </div>
 
-      <img src="/tiger.png" alt="호랑이" style={{ width: '120px', marginBottom: '15px' }} />
+      <img
+        src={mainCharacterImages[user.profileImageUrl] || "/img/default.jpg"}
+        alt="내 캐릭터"
+        style={{ width: "500px", borderRadius: "10px" }}
+      />
 
       <div className="graph-wrapper">
         <ResponsiveContainer>
@@ -114,15 +147,20 @@ const Main = () => {
         </div>
         <div>
           <h4>운동 칼로리</h4>
-          <p>🔥 {burnedCalories} kcal</p>
+          <p>🔥 총 소모 칼로리: {burnedCalories} kcal</p>
         </div>
       </div>
 
       <div style={{ marginTop: '20px' }}>
-        오늘 한 운동 :
-        <img src="/icon1.png" alt="운동1" style={{ margin: '0 10px' }} />
-        <img src="/icon2.png" alt="운동2" style={{ margin: '0 10px' }} />
-        <img src="/icon3.png" alt="운동3" style={{ margin: '0 10px' }} />
+        오늘 한 운동:
+        {exerciseTypes.map((type) => (
+          <img
+            key={type}
+            src={typeIconMap[type] || "/icons/default.png"}
+            alt={type}
+            style={{ width: '40px', margin: '0 10px' }}
+          />
+        ))}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-// 컴포넌트 import
+
 import Navbar from './components/Navbar/Navbar';  
 import Main from './page/Main/main';  
 import Calories from './page/Calories/calories';  
@@ -17,16 +17,22 @@ import Detail from './page/Community/pages/Detail';
 import MyPost from "./page/Community/pages/MyPost";
 import Edit from './page/Community/pages/Edit';
 
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAuthLoaded, setIsAuthLoaded] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem('isLoggedIn');
-    if (stored === 'true') {
+    const storedLogin = localStorage.getItem('isLoggedIn');
+    const storedUserId = localStorage.getItem('userId');
+
+    if (storedLogin === 'true' && storedUserId) {
       setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userId');
     }
+
     setIsAuthLoaded(true);
   }, []);
 
@@ -55,6 +61,7 @@ function App() {
           path="/"
           element={isLoggedIn ? <Navigate to="/main" replace /> : <Login setIsLoggedIn={handleLogin} />}
         />
+        <Route path="/login" element={<Login setIsLoggedIn={handleLogin} />} />
         <Route path="/main" element={isLoggedIn ? <Main /> : <Navigate to="/" replace />} />
         <Route path="/signup" element={<SignUp setIsLoggedIn={handleLogin} />} />
         <Route path="/calendar" element={isLoggedIn ? <Calendar userId={localStorage.getItem('userId')} /> : <Navigate to="/" replace />} />
@@ -63,9 +70,9 @@ function App() {
         <Route path="/exercise" element={isLoggedIn ? <Exercise /> : <Navigate to="/" replace />} />
         <Route path="/community" element={isLoggedIn ? <Community /> : <Navigate to="/" replace />} />
         <Route path="/detail/:id" element={isLoggedIn ? <Detail /> : <Navigate to="/" replace />} />
-        <Route path="/myinfo" element={isLoggedIn ? <MyInfo /> : <Navigate to="/" replace />} />
+        <Route path="/myinfo" element={isLoggedIn ? <MyInfo handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
         <Route path="/write" element={isLoggedIn ? <Write /> : <Navigate to="/" replace />} />
-        <Route path="/mypost" element={<MyPost />} />
+        <Route path="/mypost" element={isLoggedIn ? <MyPost /> : <Navigate to="/" replace />} />
         <Route path="/edit/:id" element={isLoggedIn ? <Edit /> : <Navigate to="/" replace />} />
       </Routes>
     </Router>

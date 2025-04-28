@@ -66,6 +66,12 @@
   border-radius: 6px;
   cursor: pointer;
   margin-bottom: 17px;
+  min-width: 90px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .write-button:hover {
@@ -148,26 +154,28 @@
   margin: 0.4rem 0;
 }
 
-/* 커뮤니티 전용 페이지네이션 */
-.community-pagination {
+
+.pagination {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 1rem;
   margin-top: 2rem;
 }
 
-.community-pagination button {
-  background-color: #3d509a;
+.pagination button {
+  background-color: #3f528c;
+  padding: 10px 20px;
   color: white;
-  margin: 10px 50px;
+  text-align: center;
+  margin: 5px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  padding: 8px 18px;
-  font-size: 1rem;
-  transition: background-color 0.2s ease;
 }
 
-.community-pagination button:hover {
-  background-color: #2f3f7f;
+.pagination button:hover {
+  background-color: #91bde0;
+    color: black;
 }
 
