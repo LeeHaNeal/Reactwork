@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../Login/login.css";  // Login 스타일 적용
+import "../Login/login.css";  
 
 const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Login = ({ setIsLoggedIn }) => {
     } catch (error) {
       console.error('로그인 실패:', error);
       if (error.response && error.response.status === 401) {
-        alert(error.response.data); // 서버가 보내준 메시지 출력 ("비밀번호가 틀렸습니다" 등)
+        alert(error.response.data);
       } else {
         alert('로그인 실패! 서버 오류가 발생했습니다.');
       }

@@ -1,5 +1,3 @@
-// calendar.jsx 전체 코드 (KST 날짜 로직 수정 반영)
-
 import React, { useState, useEffect } from 'react';
 import './calendar.css';
 import CalendarComponent from 'react-calendar';
@@ -11,7 +9,6 @@ function Calendar({ userId }) {
   const [foodLogs, setFoodLogs] = useState([]);
 
   
- // ✅ 수정된 KST 날짜 함수
  const getKSTDateString = (date) => {
   const kst = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
   return kst.toISOString().split('T')[0];
@@ -19,7 +16,7 @@ function Calendar({ userId }) {
 
 
 
-  // 🔍 날짜별 칼로리 표시
+
   const getCaloriesForDate = (date) => {
     const dateStr = getKSTDateString(date);
     const entry = calorieData.find(d => {
@@ -31,7 +28,7 @@ function Calendar({ userId }) {
     return entry ? `${entry.totalCalories} kcal` : '기록 없음';
   };
 
-  // 📅 선택 날짜 식사 기록 요청
+ 
   useEffect(() => {
     if (!userId || !value) return;
 
@@ -41,7 +38,7 @@ function Calendar({ userId }) {
       .catch((err) => console.error('❌ [식사 기록 오류]', err));
   }, [userId, value]);
 
-  // 📊 전체 날짜 칼로리 요청
+  
   useEffect(() => {
     if (!userId) return;
 

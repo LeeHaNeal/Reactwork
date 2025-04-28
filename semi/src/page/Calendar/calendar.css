@@ -1,4 +1,4 @@
-/* 캘린더 전체 */
+
 .react-calendar {
   width: 100%;
   max-width: 720px;
@@ -12,7 +12,7 @@
   color: #3f528c;
 }
 
-/* 네비게이션 바 */
+
 .react-calendar__navigation {
   display: flex;
   justify-content: center;
@@ -32,7 +32,7 @@
   cursor: pointer;
 }
 
-/* 요일 헤더 */
+
 .react-calendar__month-view__weekdays {
   display: flex;
   justify-content: space-between;
@@ -48,12 +48,12 @@
   font-size: 0.9rem;
 }
 
-/* 일요일 스타일 */
+
 .react-calendar__month-view__weekdays__weekday:nth-child(1) {
   color: #ff5050;
 }
 
-/* 날짜 셀 */
+
 .react-calendar__tile {
   width: calc(100% / 7);
   background-color: #a7cff2;
@@ -68,32 +68,32 @@
   border: none;
 }
 
-/* 오늘 날짜 강조 */
+
 .react-calendar__tile--now {
   background-color: #cee1f2;
   box-shadow: inset 0 0 0 2px #3f528c;
 }
 
-/* 선택된 날짜 */
+
 .react-calendar__tile--active {
   background-color: #88A7CF !important;
   color: white !important;
 }
 
-/* hover 효과 */
+
 .react-calendar__tile:hover {
   background-color: #88A7CF;
   color: white;
 }
 
-/* kcal 텍스트 */
+
 .react-calendar__tile > div {
   margin-top: 5px;
   font-size: 0.75rem;
   color: #3f528c;
   font-weight: normal;
 }
-/* 📅 식사 기록 카드 */
+
 .food-log-section {
   margin-top: 2rem;
   padding: 20px;
@@ -103,7 +103,7 @@
   font-family: 'Arial', sans-serif;
 }
 
-/* 날짜 제목 */
+
 .food-log-section h3 {
   color: #3f528c;
   font-size: 1.3rem;
@@ -113,14 +113,14 @@
   gap: 8px;
 }
 
-/* 리스트 전체 */
+
 .food-log-list {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
 
-/* 리스트 아이템 */
+
 .food-log-list li {
   background-color: #ffffff;
   border: 1px solid #d0e3f0;
@@ -149,7 +149,6 @@
 }
 
 
-/* 🟦 3칸 식사 시간 그리드 */
 .meal-grid {
   display: flex;
   justify-content: space-between;

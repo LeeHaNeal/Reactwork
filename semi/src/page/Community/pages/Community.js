@@ -10,7 +10,7 @@ const Community = () => {
   const [posts, setPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [rankers, setRankers] = useState([]); // ✅ 추가
+  const [rankers, setRankers] = useState([]); 
   const postsPerPage = 5;
 
   
