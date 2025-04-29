@@ -117,9 +117,9 @@ const Main = () => {
                 align="right"
                 content={() => (
                   <div style={{
-                    display: 'flex', justifyContent: 'flex-end', marginBottom: '15px',
+                    display: 'flex', justifyContent: 'flex-end', marginBottom: '30px',
                     fontSize: '13px', fontFamily: 'Noto Sans KR, Arial, sans-serif',
-                    gap: '14px', paddingRight: '20px', color: '#555'
+                    gap: '10px', paddingRight: '20px', color: '#555'
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <div style={{ width: '10px', height: '10px', backgroundColor: '#82ca9d', borderRadius: '50%', marginRight: '6px' }}></div>
