@@ -1,235 +1,188 @@
-/* 전체 레이아웃 */
-body, html {
+
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Noto Sans KR', 'Arial', sans-serif;
-  background-color: #f9f9fc;
-  height: 100%;
+  box-sizing: border-box;
 }
 
-.wrapper {
+body {
+  font-family: 'Noto Sans KR', 'Pretendard', sans-serif;
+  background-color: #f5f6fa;
+  color: #2e2e2e;
+  line-height: 1.6;
+}
+
+.main-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  align-items: center;
+  padding: 40px 20px;
 }
 
-.main-container {
-  flex: 1;
-  padding: 40px 20px 0;
-  text-align: center;
-}
-
-.user-info {
-  margin: 20px 0;
-  font-size: 17px;
-  font-weight: bold;
-  color: #333;
-}
-
-.main-character {
-  width: 500px;
-  height: auto;
-  border-radius: 20px;
-  margin: 50px 0;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-.graph-wrapper {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto 40px;
-  height: 300px;
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
-}
-
-.graph-wrapper:hover {
-  transform: translateY(-4px);
-}
-
-.charts {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 30px;
-  margin: 30px 0;
-}
-
-.charts > div {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 16px;
-  width: 260px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s ease;
-}
-
-.charts > div:hover {
-  transform: translateY(-4px);
-}
-
-.charts h4 {
-  font-size: 18px;
-  color: #3f528c;
-  margin-bottom: 8px;
-}
-
-.charts p {
-  font-size: 16px;
-  font-weight: bold;
-  color: #444;
-}
-
-.dark-toggle-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-}
-
-.dark-toggle {
-  background-color: #444;
-  color: #eee;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.dark-toggle:hover {
-  background-color: #666;
-}
-
-.main-footer {
-  background-color: #333;
-  color: #ccc;
-  padding: 30px 20px;
-  font-size: 13px;
-}
-
-.footer-top {
-  display: flex;
+.main-user-card {
+  display: flex; 
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  border-bottom: 1px solid #555;
-  padding-bottom: 15px;
-  margin-bottom: 15px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  width: 100%;
+  max-width: 960px; 
+  margin-bottom: 40px;
+  gap: 20px; 
 }
 
-.footer-links {
+
+.main-user-info,
+.main-character-wrapper,
+.main-activity-section {
+  flex: 1;
+}
+
+
+.main-user-info h3 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+}
+
+.main-user-info p {
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.main-badge {
+  background-color: #ffd966;
+  color: #333;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+
+.main-calories {
+  margin: 20px 0;
+  padding: 12px;
+  background-color: #ffeaea;
+  color: #ff4d4d;
+  font-weight: bold;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+
+.main-character-wrapper img {
+  width: 220px;
+  max-width: 100%; 
+  border-radius: 15px;
+}
+
+
+.main-activity-section {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-activity-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #2e2e2e;
+  margin-bottom: 10px;
+}
+
+.main-exercise-icons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 10px;
+  justify-items: center;
+}
+
+.main-exercise-icons img {
+  width: 50px;
+}
+
+
+.main-graph-wrapper {
+  width: 100%;
+  max-width: 960px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 40px;
+}
+
+
+.main-footer {
+  width: 100%;
+  max-width: none;
+  background: #2c2c2c;
+  color: #ccc;
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 40px;
+}
+
+.main-footer-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.main-footer-content {
+  display: flex;
+  align-items: center;
   gap: 12px;
 }
 
-.footer-links a {
-  color: inherit;
-  text-decoration: none;
+.main-footer-icon {
+  width: 30px;
+  height: auto;
 }
 
-.footer-links a:hover {
-  text-decoration: underline;
+.main-footer-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ddd;
 }
 
-.footer-bottom {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.footer-bottom p {
-  margin: 5px 0;
+.main-footer-bottom p {
   font-size: 12px;
-  color: #999;
-}
-
-.footer-policy {
+  color: #888;
   margin-top: 5px;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
-.footer-policy a {
-  color: inherit;
-  text-decoration: none;
-}
 
-.footer-policy a:hover {
-  text-decoration: underline;
-}
 
-/* 다크모드 전체 */
-.dark-mode .main-container {
-  background-color: #121212;
-  color: #e0e0e0;
-}
+@media (max-width: 768px) {
+  .main-user-card {
+    flex-direction: column; 
+    padding: 20px;
+  }
 
-.dark-mode .user-info {
-  color: #e0e0e0;
-}
+  .main-graph-wrapper {
+    padding: 20px;
+  }
 
-.dark-mode .graph-wrapper {
-  background-color: #2c2c2c;
-  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.08);
-}
+  .main-exercise-icons {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
-.dark-mode .charts > div {
-  background-color: #2c2c2c;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.06);
-}
+  .main-character-wrapper img {
+    width: 140px;
+  }
 
-.dark-mode .charts h4 {
-  color: #9fc9ff;
-}
-
-.dark-mode .charts p {
-  color: #e0e0e0;
-}
-
-.dark-mode .recharts-cartesian-axis-tick-value,
-.dark-mode .recharts-label {
-  fill: #ffffff !important;
-}
-
-.dark-mode .recharts-default-legend span {
-  color: #ffffff !important;
-}
-
-.recharts-legend-wrapper {
-  margin-top: -20px;
-}
-
-.dark-mode .main-footer {
-  background-color: #1c1c1c;
-  color: #ccc;
-}
-
-.dark-mode .main-footer a {
-  color: #ccc;
-}
-
-.dark-mode .main-footer a:hover {
-  color: #fff;
-}
-
-/* 반응형 */
-@media (max-width: 600px) {
-  .charts {
+  .main-footer-top {
     flex-direction: column;
-    align-items: center;
   }
-  .charts > div {
-    width: 90%;
-  }
-  .main-character {
-    width: 220px;
+
+  .main-footer-content {
+    flex-direction: column;
   }
 }

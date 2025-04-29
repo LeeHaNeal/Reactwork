@@ -70,18 +70,46 @@ const Main = () => {
   ];
 
   return (
-    <div className="wrapper">
-      <div className="main-container">
-        <div className="user-info">
-          키: {user.height}cm | 현재 몸무게: {user.weight}kg | 목표 몸무게: {user.goalWeight}kg |
-          도전 점수: {user.challengeScore}점 | 🔥 잔여 칼로리: {remainingCalories}kcal
+    <>
+      <div className="main-wrapper">
+        <div className="main-user-card">
+
+          <div className="main-user-info">
+            <h3>👤 {user.name}님의 피트니스 리포트</h3>
+            <p><strong>키</strong>: {user.height}cm | <strong>현재 몸무게</strong>: {user.weight}kg</p>
+            <p><strong>목표 몸무게</strong>: {user.goalWeight}kg | <strong>도전 점수</strong>:
+              <span className="main-badge">{user.challengeScore}점</span>
+            </p>
+            <div className="main-calories">
+              🔥 잔여 칼로리: {remainingCalories} kcal
+            </div>
+          </div>
+
+          <div className="main-character-wrapper">
+            <img src={mainCharacterImages[user.profileImageUrl] || "/img/default.jpg"} alt="캐릭터" />
+          </div>
+
+          <div className="main-activity-section">
+            <div className="main-activity-title">오늘 한 운동</div>
+            <div className="main-exercise-icons">
+              {exerciseTypes.map((type, index) => (
+                <img
+                  key={index}
+                  src={typeIconMap[type] || "/icons/default.png"}
+                  alt={type}
+                />
+              ))}
+            </div>
+          </div>
+
         </div>
-        <img src={mainCharacterImages[user.profileImageUrl] || "/img/default.jpg"} alt="내 캐릭터" className="main-character" />
-        <div className="graph-wrapper">
-          <ResponsiveContainer>
+
+      
+        <div className="main-graph-wrapper">
+          <ResponsiveContainer width="100%" height={300}>
             <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 10 }} barSize={60}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" tick={{ fill: '#000000' }} tickLine={false} /> {/* 항상 검정 */}
+              <XAxis dataKey="name" tick={{ fill: '#000000' }} tickLine={false} />
               <YAxis domain={[0, 800]} />
               <Tooltip />
               <Legend
@@ -104,12 +132,7 @@ const Main = () => {
                   </div>
                 )}
               />
-              <Bar
-                dataKey="kcal"
-                radius={[10, 10, 0, 0]}
-                isAnimationActive
-                label={{ position: 'top', fontSize: 12, fill: '#555' }}
-              >
+              <Bar dataKey="kcal" radius={[10, 10, 0, 0]} isAnimationActive label={{ position: 'top', fontSize: 12, fill: '#555' }}>
                 {chartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
@@ -120,52 +143,22 @@ const Main = () => {
             </BarChart>
           </ResponsiveContainer>
         </div>
-
-        <div className="charts">
-          <div>
-            <h4>오늘 섭취 칼로리</h4>
-            <p>🍱 {todayCalories} kcal</p>
-          </div>
-          <div>
-            <h4>운동 칼로리</h4>
-            <p>🔥 총 소모 칼로리: {burnedCalories} kcal</p>
-          </div>
-        </div>
-
-        <div style={{ marginTop: '20px' }}>
-          오늘 한 운동:
-          {exerciseTypes.map((type) => (
-            <img
-              key={type}
-              src={typeIconMap[type] || "/icons/default.png"}
-              alt={type}
-              style={{ width: '40px', margin: '0 10px' }}
-            />
-          ))}
-        </div>
       </div>
 
+      
       <footer className="main-footer">
-        <div className="footer-top">
-          <div className="footer-links">
-            <a href="#">공지사항</a>
-            <a href="#">파트너</a>
-            <a href="#">개발자센터</a>
-            <a href="#">광고 안내</a>
-          </div>
-          <div className="footer-icons">
-            <img src="/img/footer1.png" alt="Footer Icon 1" />
-            <img src="/img/footer2.png" alt="Footer Icon 2" />
+        <div className="main-footer-top">
+          <div className="main-footer-content">
+            <img src="/img/footer1.png" alt="Footer Icon 1" className="main-footer-icon" />
+            <span className="main-footer-text">더 조은 아카데미 | 4조 칼로몽</span>
+            <img src="/img/footer2.png" alt="Footer Icon 2" className="main-footer-icon" />
           </div>
         </div>
-        <div className="footer-bottom">
-          <p>ⓒ 2024 칼로몽. All rights reserved.</p>
-          <div className="footer-policy">
-            <a href="#">이용약관</a> | <a href="#">개인정보처리방침</a> | <a href="#">고객센터</a>
-          </div>
+        <div className="main-footer-bottom">
+          <p>Made by: 이하늘 한정환 김기찬 안순화 한수연</p>
         </div>
       </footer>
-    </div>
+    </>
   );
 };
 
