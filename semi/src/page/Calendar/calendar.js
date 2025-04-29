@@ -75,15 +75,22 @@ function Calendar({ userId }) {
         calendarType="gregory"
         formatDay={(locale, date) => date.getDate()}
         showNeighboringMonth={false}
-        tileClassName={({ date, view }) => view === 'month' && date.getDay() === 6 ? 'calendar-saturday' : null}
+        tileClassName={({ date, view }) => {
+          if (view === 'month') {
+            if (date.getDay() === 0) return 'calendar-sunday'; // 일요일 빨간색
+            if (date.getDay() === 6) return 'calendar-saturday'; // 토요일 파란색
+          }
+          return null;
+        }}
         tileContent={({ date, view }) =>
           view === 'month' && (
-            <div style={{ marginTop: 2, fontSize: '0.75rem', color: '#3f528c' }}>
+            <div style={{ marginTop: 2, fontSize: '0.75rem', color: '#666' }}>
               {getCaloriesForDate(date)}
             </div>
           )
         }
       />
+
 
       <div className="calendar-log-section">
         <h3>📅 {getKSTDateString(value)} 기록</h3>
