@@ -104,3 +104,13 @@
 .signup-button:active {
   background-color: #1a2a47;
 }
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+body {
+  font-family: 'Gowun Dodum', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6,
+button, .title, .bold, .highlight {
+  font-family: 'Gowun Dodum', sans-serif;
+}
