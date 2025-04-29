@@ -106,7 +106,7 @@ const Main = () => {
 
       
         <div className="main-graph-wrapper">
-          <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={300}>
             <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 10 }} barSize={60}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" tick={{ fill: '#000000' }} tickLine={false} />
@@ -117,7 +117,7 @@ const Main = () => {
                 align="right"
                 content={() => (
                   <div style={{
-                    display: 'flex', justifyContent: 'flex-end', marginBottom: '10px',
+                    display: 'flex', justifyContent: 'flex-end', marginBottom: '15px',
                     fontSize: '13px', fontFamily: 'Noto Sans KR, Arial, sans-serif',
                     gap: '14px', paddingRight: '20px', color: '#555'
                   }}>
@@ -142,6 +142,7 @@ const Main = () => {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
+
         </div>
       </div>
 
