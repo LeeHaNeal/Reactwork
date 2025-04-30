@@ -4,8 +4,11 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend, Cell
 } from 'recharts';
 import './main.css';
+import { useDarkMode } from '../../context/DarkModeContext';
 
 const Main = () => {
+  const { isDarkMode } = useDarkMode(); // ✅ 전역 상태만 유지
+
   const [user, setUser] = useState(null);
   const [todayCalories, setTodayCalories] = useState(null);
   const [burnedCalories, setBurnedCalories] = useState(null);
@@ -20,11 +23,11 @@ const Main = () => {
   };
 
   const typeIconMap = {
-    유산소: "/img/img1.png",
-    근력: "/img/img2.png",
-    유연성: "/img/img3.png",
-    일상활동: "/img/img4.png",
-    균형감각: "/img/img5.png",
+    유산소: isDarkMode ? "/img/dark_img1.png" : "/img/img1.png",
+    근력: isDarkMode ? "/img/dark_img2.png" : "/img/img2.png",
+    유연성: isDarkMode ? "/img/dark_img3.png" : "/img/img3.png",
+    일상활동: isDarkMode ? "/img/dark_img4.png" : "/img/img4.png",
+    균형감각: isDarkMode ? "/img/dark_img5.png" : "/img/img5.png",
   };
 
   const getKSTDateString = () => {
@@ -71,9 +74,8 @@ const Main = () => {
 
   return (
     <>
-      <div className="main-wrapper">
+      <div className={`main-wrapper ${isDarkMode ? 'dark' : 'light'}`}>
         <div className="main-user-card">
-
           <div className="main-user-info">
             <h3>👤 {user.name}님의 피트니스 리포트</h3>
             <p><strong>키</strong>: {user.height}cm | <strong>현재 몸무게</strong>: {user.weight}kg</p>
@@ -101,25 +103,36 @@ const Main = () => {
               ))}
             </div>
           </div>
-
         </div>
 
-      
         <div className="main-graph-wrapper">
-        <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={300}>
             <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 10 }} barSize={60}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" tick={{ fill: '#000000' }} tickLine={false} />
-              <YAxis domain={[0, 800]} />
-              <Tooltip />
+              <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? "#555" : "#ccc"} />
+              <XAxis dataKey="name" tick={{ fill: isDarkMode ? "#fff" : "#000" }} tickLine={false} />
+              <YAxis domain={[0, 800]} tick={{ fill: isDarkMode ? "#fff" : "#000" }} />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: isDarkMode ? "#333" : "#fff",
+                  borderColor: isDarkMode ? "#777" : "#ccc",
+                  color: isDarkMode ? "#fff" : "#000"
+                }}
+                itemStyle={{ color: isDarkMode ? "#fff" : "#000" }}
+                labelStyle={{ color: isDarkMode ? "#fff" : "#000" }}
+              />
               <Legend
                 verticalAlign="top"
                 align="right"
                 content={() => (
                   <div style={{
-                    display: 'flex', justifyContent: 'flex-end', marginBottom: '30px',
-                    fontSize: '13px', fontFamily: 'Noto Sans KR, Arial, sans-serif',
-                    gap: '10px', paddingRight: '20px', color: '#555'
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    marginBottom: '30px',
+                    fontSize: '13px',
+                    fontFamily: 'Noto Sans KR, Arial, sans-serif',
+                    gap: '10px',
+                    paddingRight: '20px',
+                    color: isDarkMode ? '#ccc' : '#555'
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <div style={{ width: '10px', height: '10px', backgroundColor: '#82ca9d', borderRadius: '50%', marginRight: '6px' }}></div>
@@ -132,7 +145,12 @@ const Main = () => {
                   </div>
                 )}
               />
-              <Bar dataKey="kcal" radius={[10, 10, 0, 0]} isAnimationActive label={{ position: 'top', fontSize: 12, fill: '#555' }}>
+              <Bar
+                dataKey="kcal"
+                radius={[10, 10, 0, 0]}
+                isAnimationActive
+                label={{ position: 'top', fontSize: 12, fill: isDarkMode ? "#fff" : "#555" }}
+              >
                 {chartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
@@ -142,23 +160,21 @@ const Main = () => {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-
         </div>
-      </div>
 
-      
-      <footer className="main-footer">
-        <div className="main-footer-top">
-          <div className="main-footer-content">
-            <img src="/img/footer1.png" alt="Footer Icon 1" className="main-footer-icon" />
-            <span className="main-footer-text">더 조은 아카데미 | 4조 칼로몽</span>
-            <img src="/img/footer2.png" alt="Footer Icon 2" className="main-footer-icon" />
+        <footer className="main-footer">
+          <div className="main-footer-top">
+            <div className="main-footer-content">
+              <img src="/img/footer1.png" alt="Footer Icon 1" className="main-footer-icon" />
+              <span className="main-footer-text">더 조은 아카데미 | 4조 칼로몽</span>
+              <img src="/img/footer2.png" alt="Footer Icon 2" className="main-footer-icon" />
+            </div>
           </div>
-        </div>
-        <div className="main-footer-bottom">
-          <p>Made by: 이하늘 한정환 김기찬 안순화 한수연</p>
-        </div>
-      </footer>
+          <div className="main-footer-bottom">
+            <p>Made by: 이하늘 한정환 김기찬 안순화 한수연</p>
+          </div>
+        </footer>
+      </div>
     </>
   );
 };

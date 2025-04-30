@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
+import { useDarkMode } from '../../context/DarkModeContext'; // ✅ 추가
 
 const Navbar = ({ isLoggedIn, handleLogout, isAuthLoaded }) => {
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
-
+  const { isDarkMode, toggleDarkMode } = useDarkMode(); // ✅ 다크모드 상태 불러오기
 
   const onLogoutClick = () => {
     handleLogout();
@@ -29,8 +30,11 @@ const Navbar = ({ isLoggedIn, handleLogout, isAuthLoaded }) => {
           </ul>
         </div>
 
-     
         <div className="nav-right">
+          <button className="theme-toggle-btn" onClick={toggleDarkMode}>
+            {isDarkMode ? "☀️ 라이트 모드" : "🌙 다크 모드"}
+          </button>
+
           {isAuthLoaded && isLoggedIn ? (
             <>
               {userId && <span className="welcome-text">{userId}님 환영합니다</span>}
