@@ -153,7 +153,7 @@
 
 .main-footer-bottom p {
   font-size: 12px;
-  color: #888;
+  color: white;
   margin-top: 5px;
 }
 
@@ -237,9 +237,9 @@ body.dark, .dark {
 }
 
 .dark .main-footer-text {
-  color: #aaa;
+  color: white;
 }
 
 .dark .main-footer-bottom p {
-  color: #666;
+  color: white;
 }

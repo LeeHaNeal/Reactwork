@@ -7,8 +7,7 @@ import './main.css';
 import { useDarkMode } from '../../context/DarkModeContext';
 
 const Main = () => {
-  const { isDarkMode } = useDarkMode(); // ✅ 전역 상태만 유지
-
+  const { isDarkMode } = useDarkMode(); 
   const [user, setUser] = useState(null);
   const [todayCalories, setTodayCalories] = useState(null);
   const [burnedCalories, setBurnedCalories] = useState(null);
@@ -125,14 +124,8 @@ const Main = () => {
                 align="right"
                 content={() => (
                   <div style={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    marginBottom: '30px',
-                    fontSize: '13px',
-                    fontFamily: 'Noto Sans KR, Arial, sans-serif',
-                    gap: '10px',
-                    paddingRight: '20px',
-                    color: isDarkMode ? '#ccc' : '#555'
+                    display: 'flex',justifyContent: 'flex-end',marginBottom: '30px',fontSize: '13px', fontFamily: 'Noto Sans KR, Arial, sans-serif',
+                    gap: '10px', paddingRight: '20px',color: isDarkMode ? '#ccc' : '#555'
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <div style={{ width: '10px', height: '10px', backgroundColor: '#82ca9d', borderRadius: '50%', marginRight: '6px' }}></div>

@@ -34,8 +34,6 @@ const Navbar = ({ isLoggedIn, handleLogout, isAuthLoaded }) => {
           <li><Link to="/myinfo">내 정보</Link></li>
         </ul>
       </div>
-  
-   
       <div className="nav-right">
         <button className="theme-toggle-btn" onClick={toggleDarkMode}>
           {isDarkMode ? "☀️ 라이트 모드" : "🌙 다크 모드"}

@@ -49,7 +49,9 @@
   align-items: center;
   gap: 1rem;
 }
-
+.search-bar-wrapper a {
+  text-decoration: none;
+}
 .write-button {
   background-color: #3d509a;
   color: white;
@@ -69,7 +71,6 @@
   background-color: #2f3f7f;
 }
 
-/* 📄 게시글 리스트 컨테이너 */
 .list-container {
   background-color: #f7f7f7;
   padding: 2rem;

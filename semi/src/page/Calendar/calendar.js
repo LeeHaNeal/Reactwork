@@ -34,8 +34,6 @@ function Calendar({ userId }) {
 
   useEffect(() => {
     if (!userId) return;
-    
-   
     axios.get(`http://localhost:8080/exercises`)
       .then((res) => setExerciseList(res.data))
       .catch((err) => console.error('❌ [운동 목록 오류]', err));
