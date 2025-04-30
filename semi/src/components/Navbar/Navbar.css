@@ -43,6 +43,8 @@
 }
 
 
+
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -156,4 +158,37 @@
 
 .theme-toggle-btn:active {
   transform: scale(0.98);
+}
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left {
+  flex: 1;
+}
+
+.nav-center {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.logo {
+  list-style: none;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.logo a {
+  text-decoration: none;
+  color: white;
 }
