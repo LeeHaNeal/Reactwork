@@ -16,7 +16,7 @@ import Detail from './page/Community/pages/Detail';
 import MyPost from "./page/Community/pages/MyPost";
 import Edit from './page/Community/pages/Edit';
 
-import { DarkModeProvider } from './context/DarkModeContext'; // ✅ 추가
+import { DarkModeProvider } from './context/DarkModeContext'; 
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -51,7 +51,7 @@ function App() {
   if (!isAuthLoaded) return <div>로딩 중...</div>;
 
   return (
-    <DarkModeProvider> {/* ✅ 여기 감싸기 */}
+    <DarkModeProvider>
       <Router>
         <Navbar
           isLoggedIn={isLoggedIn}

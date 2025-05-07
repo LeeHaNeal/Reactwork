@@ -82,8 +82,10 @@ const Main = () => {
               <span className="main-badge">{user.challengeScore}점</span>
             </p>
             <div className="main-calories">
-              🔥 잔여 칼로리: {remainingCalories} kcal
+              🔥 잔여 칼로리: {remainingCalories} kcal <br></br>
+              <span className="total-calories">(총 섭취: {todayCalories} kcal)</span>
             </div>
+
           </div>
 
           <div className="main-character-wrapper">

@@ -157,7 +157,11 @@
   margin-top: 5px;
 }
 
-
+.total-calories {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #7f8c8d;
+}
 
 @media (max-width: 768px) {
   .main-user-card {
@@ -242,4 +246,7 @@ body.dark, .dark {
 
 .dark .main-footer-bottom p {
   color: white;
+}
+.dark .total-calories {
+  color: #aab8c2;  
 }
