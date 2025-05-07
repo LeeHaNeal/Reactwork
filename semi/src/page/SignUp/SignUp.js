@@ -30,7 +30,7 @@ const SignUp = () => {
 
   const handleIdCheck = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/users/${form.userId}`);
+      const response = await axios.get(`/users/${form.userId}`);
       if (response.data) {
         alert("이미 사용된 아이디입니다.");
         setIsIdValid(false);
@@ -62,7 +62,7 @@ const SignUp = () => {
         profileImageUrl: selectedCharacter.toString(), 
       };
 
-      const response = await axios.post("http://localhost:8080/users", newUser);
+      const response = await axios.post("/users", newUser);
       console.log("등록 성공:", response.data);
       alert("회원 등록 성공!");
 

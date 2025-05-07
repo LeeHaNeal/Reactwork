@@ -23,7 +23,7 @@ const List = ({ posts }) => {
               {post.userName === '관리자' ? (
                 <span className="admin-tag">공지사항</span>
               ) : (
-                post.isNotice && <span className="notice-tag">[공지]</span>
+                post.isNotice && <span className="notice-tag">공지</span>
               )}
               {post.title}
             </h2>

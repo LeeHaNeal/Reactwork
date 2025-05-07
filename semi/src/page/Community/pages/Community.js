@@ -16,7 +16,7 @@ const Community = () => {
   
   const fetchPosts = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/posts");
+      const response = await axios.get("/posts");
       setPosts(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("게시글 불러오기 실패:", error);
@@ -26,7 +26,7 @@ const Community = () => {
   
   const fetchRankers = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/users");
+      const response = await axios.get("/users");
       const users = response.data;
 
       const top3 = users

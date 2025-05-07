@@ -23,9 +23,9 @@ const Challenge = () => {
   }, []);
 
   useEffect(() => {
-    let url = "http://localhost:8080/challenges";
+    let url = "/challenges";
     if (difficulty !== "전체") {
-      url = `http://localhost:8080/challenges/filter?difficulty=${difficulty}`;
+      url = `/challenges/filter?difficulty=${difficulty}`;
     }
     axios.get(url)
       .then(res => setChallenges(res.data))
@@ -34,7 +34,7 @@ const Challenge = () => {
 
   useEffect(() => {
     if (userId) {
-      axios.get(`http://localhost:8080/challenges/participating`, { params: { userId } })
+      axios.get(`/challenges/participating`, { params: { userId } })
         .then(res => setParticipatingChallenges(res.data))
         .catch(err => console.error("진행 중인 챌린지 불러오기 실패:", err));
     }
@@ -50,12 +50,12 @@ const Challenge = () => {
       return;
     }
 
-    axios.post(`http://localhost:8080/challenges/${challengeId}/participate`, null, {
+    axios.post(`/challenges/${challengeId}/participate`, null, {
       params: { userId }
     })
       .then(() => {
         alert('도전하기 성공!');
-        axios.get(`http://localhost:8080/challenges/participating`, { params: { userId } })
+        axios.get(`/challenges/participating`, { params: { userId } })
           .then(res => setParticipatingChallenges(res.data))
           .catch(err => console.error("참여 목록 새로고침 실패:", err));
       })
@@ -71,12 +71,12 @@ const Challenge = () => {
       return;
     }
 
-    axios.post(`http://localhost:8080/challenges/${challengeId}/complete`, null, {
+    axios.post(`/challenges/${challengeId}/complete`, null, {
       params: { userId }
     })
       .then(() => {
         alert('챌린지 성공!');
-        axios.get(`http://localhost:8080/challenges/participating`, { params: { userId } })
+        axios.get(`/challenges/participating`, { params: { userId } })
           .then(res => setParticipatingChallenges(res.data))
           .catch(err => console.error("참여 목록 새로고침 실패:", err));
       })
@@ -92,7 +92,7 @@ const Challenge = () => {
       return;
     }
 
-    axios.post(`http://localhost:8080/challenges/${challengeId}/fail`, null, {
+    axios.post(`/challenges/${challengeId}/fail`, null, {
       params: { userId }
     })
       .then(() => {
@@ -127,7 +127,7 @@ const Challenge = () => {
       pointReward: parseInt(pointReward, 10)
     };
 
-    axios.post("http://localhost:8080/challenges", newChallenge)
+    axios.post("/challenges", newChallenge)
       .then(res => {
         setChallenges(prev => [...prev, res.data]);
         setTitle("");

@@ -12,7 +12,7 @@ const Edit = () => {
 
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/posts/${id}`)
+    axios.get(`/posts/${id}`)
       .then((res) => {
         console.log("불러온 게시글:", res.data); 
 
@@ -34,7 +34,7 @@ const Edit = () => {
       userId: currentUser,
     };
   
-    axios.put(`http://localhost:8080/posts/${id}`, updatedPost)
+    axios.put(`/posts/${id}`, updatedPost)
       .then(() => {
         alert("수정 완료!");
         navigate("/community"); 

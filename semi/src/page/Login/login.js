@@ -11,7 +11,7 @@ const Login = ({ setIsLoggedIn }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://localhost:8080/users/login`, {
+      const res = await axios.post(`/users/login`, {
         userId: userId,
         passwordHash: password
       });
@@ -35,42 +35,43 @@ const Login = ({ setIsLoggedIn }) => {
 
   return (
     <div className="login-wrapper">
-    <div className="login-card">
-      <div className="left-section">
-        <img src="/img/character.png" alt="칼로몽 로고" className="logo-image" />
-        <div className="logo-footer">로그인 후 이용가능</div>
-      </div>
-  
-      <div className="right-section">
-        <form onSubmit={handleLogin} className="login-form">
-          <div className="input-group">
-            <label>아이디</label>
-            <input
-              type="text"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label>비밀번호</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="login-button">로그인</button>
-          <button type="button" className="signup-button" onClick={() => navigate('/signup')}>
-            회원가입
-          </button>
-        </form>
+      <div className="login-card">
+        <div className="left-section">
+          <img src="/img/character.png" alt="칼로몽 로고" className="logo-image" />
+          <div className="logo-footer">로그인 후 이용가능</div>
+        </div>
+
+        <div className="right-section">
+          <form onSubmit={handleLogin} className="login-form">
+            <div className="input-group">
+              <label>아이디</label>
+              <input
+                type="text"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label>비밀번호</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className="login-button">로그인</button>
+            <button type="button" className="signup-button" onClick={() => navigate('/signup')}>
+              회원가입
+            </button>
+            <div className="contact-email" style={{ color: '#888', marginTop: '10px', fontSize: '17px' }}>
+              문의 이메일 : Calomong@naver.com
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  
-
   );
 };
 

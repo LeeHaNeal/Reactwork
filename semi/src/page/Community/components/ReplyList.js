@@ -16,7 +16,7 @@ const ReplyList = () => {
   }, [id]);
 
   const fetchReplies = () => {
-    axios.get(`http://localhost:8080/posts/${id}/comments`)
+    axios.get(`/posts/${id}/comments`)
       .then(res => setReplies(res.data))
       .catch(err => console.error("댓글 불러오기 실패:", err));
   };
@@ -25,7 +25,7 @@ const ReplyList = () => {
     e.preventDefault();
     if (newReply.trim() === "") return;
 
-    axios.post(`http://localhost:8080/posts/${id}/comments`, {
+    axios.post(`/posts/${id}/comments`, {
       userId: userId,
       content: newReply
     }).then(() => {
@@ -35,7 +35,7 @@ const ReplyList = () => {
   };
 
   const handleDelete = (commentId) => {
-    axios.post(`http://localhost:8080/posts/${id}/comments/${commentId}/delete`, {
+    axios.post(`/posts/${id}/comments/${commentId}/delete`, {
       userId: userId
     }).then(() => {
       fetchReplies();
@@ -46,7 +46,7 @@ const ReplyList = () => {
   };
 
   const handleUpdate = (commentId) => {
-    axios.post(`http://localhost:8080/posts/${id}/comments/${commentId}/edit`, {
+    axios.post(`/posts/${id}/comments/${commentId}/edit`, {
       userId: userId,
       content: editingContent
     }).then(() => {

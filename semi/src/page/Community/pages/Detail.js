@@ -15,7 +15,7 @@ const Detail = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/posts/${id}`);
+        const res = await axios.get(`/posts/${id}`);
         setPost(res.data);
       } catch (error) {
         console.error('게시글 불러오기 실패:', error);
@@ -30,7 +30,7 @@ const Detail = () => {
 
   const handleDelete = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
-      axios.delete(`http://localhost:8080/posts/${id}`, {
+      axios.delete(`/posts/${id}`, {
         data: { userId: currentUser },
       })
         .then(() => {
@@ -49,7 +49,7 @@ const Detail = () => {
   return (
     <div className="detail">
       <h1 className="dtitle">
-        {post.isNotice && <span className="notice-tag">[공지]</span>}
+        {post.isNotice && <span className="notice-tag">공지</span>}
         {post.title}
       </h1>
       <p className="dname">작성자: {post.userName}</p>

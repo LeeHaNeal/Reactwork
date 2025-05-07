@@ -31,7 +31,7 @@
 .post-link {
   text-decoration: none;
   color: #0b1f66;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   transition: color 0.3s ease;
   text-align: center;
@@ -44,7 +44,7 @@
 
 .list-item p {
   color: #555;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   text-align: center;
   max-width: 85%;
   margin: 0 auto;

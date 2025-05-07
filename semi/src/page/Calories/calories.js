@@ -24,7 +24,7 @@ const Calories = ({ userId }) => {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8080/foods')
+    axios.get('/foods')
       .then((res) => {
         setFoods(res.data);
         setIsLoading(false);
@@ -102,7 +102,7 @@ const Calories = ({ userId }) => {
 
     if (allFoods.length === 0) return;
 
-    axios.post('http://localhost:8080/food-logs/bulk', allFoods)
+    axios.post('/food-logs/bulk', allFoods)
       .then(() => {
         alert('저장되었습니다!');
         setMeals({ 아침: [], 점심: [], 저녁: [] });

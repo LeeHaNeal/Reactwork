@@ -20,7 +20,7 @@ const Exercise = () => {
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/exercises")
+    axios.get("/exercises")
       .then(res => setExerciseList(res.data))
       .catch(err => console.error("운동 데이터 로딩 실패:", err));
   }, []);
@@ -97,7 +97,7 @@ const Exercise = () => {
       logDate: logDate,
     }));
 
-    axios.post("http://localhost:8080/exercise-logs/bulk", logs)
+    axios.post("/exercise-logs/bulk", logs)
       .then(() => {
         alert("운동 정보가 저장되었습니다!");
         setTodayExercises([]);     

@@ -34,7 +34,7 @@ function Calendar({ userId }) {
 
   useEffect(() => {
     if (!userId) return;
-    axios.get(`http://localhost:8080/exercises`)
+    axios.get(`/exercises`)
       .then((res) => setExerciseList(res.data))
       .catch((err) => console.error('❌ [운동 목록 오류]', err));
   }, [userId]);
@@ -43,11 +43,11 @@ function Calendar({ userId }) {
     if (!userId || !value) return;
     const dateStr = getKSTDateString(value);
 
-    axios.get(`http://localhost:8080/food-logs/${userId}?date=${dateStr}`)
+    axios.get(`/food-logs/${userId}?date=${dateStr}`)
       .then((res) => setFoodLogs(res.data))
       .catch((err) => console.error('❌ [식사 기록 오류]', err));
 
-    axios.get(`http://localhost:8080/exercise-logs/${userId}?date=${dateStr}`)
+    axios.get(`/exercise-logs/${userId}?date=${dateStr}`)
       .then((res) => setExerciseLogs(res.data))
       .catch((err) => console.error('❌ [운동 기록 오류]', err));
   }, [userId, value]);
@@ -55,7 +55,7 @@ function Calendar({ userId }) {
   useEffect(() => {
     if (!userId) return;
 
-    axios.get(`http://localhost:8080/foods/total-calories?userId=${userId}`)
+    axios.get(`/foods/total-calories?userId=${userId}`)
       .then((res) => setCalorieData(res.data))
       .catch((err) => console.error('❌ [칼로리 전체 오류]', err));
   }, [userId]);

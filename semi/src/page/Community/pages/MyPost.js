@@ -10,7 +10,7 @@ const MyPost = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:8080/posts")
+    axios.get("/posts")
       .then((res) => {
         console.log("받은 전체 게시글:", res.data);
         const userId = localStorage.getItem("userId");  

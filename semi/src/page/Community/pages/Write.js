@@ -28,7 +28,7 @@ const Write = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:8080/posts", postData);
+      const response = await axios.post("/posts", postData);
       alert("게시글이 성공적으로 등록되었습니다.");
       navigate("/community");
     } catch (error) {

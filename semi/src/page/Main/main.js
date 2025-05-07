@@ -41,8 +41,8 @@ const Main = () => {
 
     const today = getKSTDateString();
 
-    axios.get(`http://localhost:8080/users/${userId}`).then(res => setUser(res.data));
-    axios.get(`http://localhost:8080/food-logs/${userId}?date=${today}`).then(res => {
+    axios.get(`/users/${userId}`).then(res => setUser(res.data));
+    axios.get(`/food-logs/${userId}?date=${today}`).then(res => {
       const categorized = { breakfast: 0, lunch: 0, dinner: 0 };
       res.data.forEach(item => {
         const meal = item.MEAL_TIME || item.mealTime;
@@ -54,8 +54,8 @@ const Main = () => {
       setTodayCalories(categorized.breakfast + categorized.lunch + categorized.dinner);
     });
 
-    axios.get(`http://localhost:8080/users/${userId}/burned-calories`).then(res => setBurnedCalories(res.data || 0));
-    axios.get(`http://localhost:8080/api/exercise-types/today`, { params: { userId } }).then(res => setExerciseTypes(res.data));
+    axios.get(`/users/${userId}/burned-calories`).then(res => setBurnedCalories(res.data || 0));
+    axios.get(`/api/exercise-types/today`, { params: { userId } }).then(res => setExerciseTypes(res.data));
   }, []);
 
   if (!user || todayCalories === null || burnedCalories === null) {

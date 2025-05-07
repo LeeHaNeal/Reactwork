@@ -20,7 +20,7 @@ const MyInfo = ({ handleLogout }) => {
 
   useEffect(() => {
     if (userId) {
-      axios.get(`http://localhost:8080/users/${userId}`)
+      axios.get(`/users/${userId}`)
         .then((response) => {
           const data = response.data;
           setUserInfo({
@@ -61,7 +61,7 @@ const MyInfo = ({ handleLogout }) => {
         return;
       }
 
-      axios.put(`http://localhost:8080/users/${userId}`, {
+      axios.put(`/users/${userId}`, {
         height: userInfo.height,
         weight: userInfo.weight,
         goalWeight: userInfo.goalWeight,
@@ -85,7 +85,7 @@ const MyInfo = ({ handleLogout }) => {
   const handleDeleteAccount = () => {
     const confirmed = window.confirm('정말 탈퇴하시겠습니까? 탈퇴 시 모든 정보가 삭제됩니다.');
     if (confirmed) {
-      axios.delete(`http://localhost:8080/users/${userId}`)
+      axios.delete(`/users/${userId}`)
         .then((response) => {
           if (response.status === 204 || response.status === 200) {
             alert('회원 탈퇴가 완료되었습니다.');
